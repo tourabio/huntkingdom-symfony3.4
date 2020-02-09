@@ -1,0 +1,12 @@
+list_publication:
+    path:     /publication
+    defaults: { _controller: ForumBundle:Default:publication }
+list_complaint:
+    path:     /complaint
+    defaults: { _controller: ForumBundle:Default:reclamation }
+blog:
+    path:     /blog
+    defaults: { _controller: ForumBundle:Default:frontblog }
+blog-single:
+    path:     /blog-single
+    defaults: { _controller: ForumBundle:Default:frontblogsingle }

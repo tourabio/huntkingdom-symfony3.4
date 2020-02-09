@@ -1,0 +1,12 @@
+list_product:
+    path:     /products
+    defaults: { _controller: ProductBundle:Default:products }
+
+
+shop:
+    path:     /shop
+    defaults: { _controller: ProductBundle:Default:frontshop }
+
+shop-single:
+    path:     /shop-single
+    defaults: { _controller: ProductBundle:Default:frontshopsingle}

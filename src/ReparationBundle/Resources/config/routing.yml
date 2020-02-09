@@ -1,0 +1,13 @@
+list_reparation:
+    path:     /reparation
+    defaults: { _controller: ReparationBundle:Default:reparation }
+list_promotion:
+    path:     /promotion
+    defaults: { _controller: ReparationBundle:Default:promotion }
+
+reparation_front:
+    path:     /reparation_front
+    defaults: { _controller: ReparationBundle:Default:frontreparation }
+promotion_front:
+    path:     /promotion_front
+    defaults: { _controller: ReparationBundle:Default:frontpromotion }
