@@ -5,7 +5,7 @@ namespace AppBundle\Controller;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Routing\Annotation\Route;
-
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted;
 class DefaultController extends Controller
 {
     /**
@@ -19,10 +19,19 @@ class DefaultController extends Controller
         ]);
     }
 
+     /**
+     * Require ROLE_ADMIN for only this controller method.
+     *
+     * @IsGranted("ROLE_ADMIN")
+     */
     public function dashboardAction()
     {
+
+
         return $this->render('dashboard/dashboard.html.twig');
     }
+
+
     public function frontAction()
     {
         return $this->render('front/index.html.twig');

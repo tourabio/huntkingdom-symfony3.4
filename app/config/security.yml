@@ -28,6 +28,6 @@ security:
         - { path: ^/login$, role: IS_AUTHENTICATED_ANONYMOUSLY }
         - { path: ^/register, role: IS_AUTHENTICATED_ANONYMOUSLY }
         - { path: ^/resetting, role: IS_AUTHENTICATED_ANONYMOUSLY }
-        - { path: ^/admin, role: ROLE_ADMIN }
-        - { path: ^/client, roles: [ROLE_CLIENT,ROLE_TRAINER,ROLE_REPAIRER] }
+        - { path: ^/dashboard, role: ROLE_ADMIN }
+        - { path: ^/front, roles: [ROLE_CLIENT,ROLE_TRAINER,ROLE_REPAIRER,ROLE_ADMIN] }
 

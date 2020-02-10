@@ -24,17 +24,11 @@ class DefaultController extends Controller
         ($this->get('security.authorization_checker')->isGranted('ROLE_CLIENT')) {
             return $this->redirectToRoute('main_front');
         }
-
-        
+        else
+        {
+            return $this->redirectToRoute('fos_user_security_login');
+        }
 
     }
-    public function adminAction()
-    {
-        return $this->render('@User/Default/admin.html.twig');
-    }
 
-    public function clientAction()
-    {
-        return $this->render('@User/Default/index.html.twig');
-    }
 }

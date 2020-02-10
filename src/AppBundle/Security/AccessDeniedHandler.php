@@ -1,7 +1,7 @@
 <?php
 
 namespace AppBundle\Security;
-
+use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Security\Core\Exception\AccessDeniedException;
@@ -15,9 +15,13 @@ class AccessDeniedHandler implements AccessDeniedHandlerInterface
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Error</title>
+   <meta charset="utf-8">
+       <meta http-equiv="x-ua-compatible" content="ie=edge">
+       <meta name="viewport" content="width=device-width, initial-scale=1">
+
+       <!--Theme Title-->
+       <title>Access Denied</title>
+       <meta name="description" content="">
 
     <style>
 * {
@@ -330,6 +334,7 @@ viewBox="0 0 150 1000"
 </svg>
 
 <div class="shine"></div>
+
 </body>
 </html>
 
