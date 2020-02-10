@@ -8,7 +8,7 @@ class DefaultController extends Controller
 {
     public function productsAction()
     {
-        return $this->render('@Product/products.html.twig');
+        return $this->render('@Product/dashboard/products.html.twig');
     }
     public function frontshopAction()
     {

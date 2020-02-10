@@ -8,11 +8,11 @@ class DefaultController extends Controller
 {
     public function reparationAction()
     {
-        return $this->render('@Reparation/reparation.html.twig');
+        return $this->render('@Reparation/dashboard/reparation.html.twig');
     }
     public function promotionAction()
     {
-        return $this->render('@Reparation/promotion.html.twig');
+        return $this->render('@Reparation/dashboard/promotion.html.twig');
     }
     public function frontreparationAction()
     {

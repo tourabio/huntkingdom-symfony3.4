@@ -8,11 +8,11 @@ class DefaultController extends Controller
 {
     public function competitionAction()
     {
-        return $this->render('@Events/competition.html.twig');
+        return $this->render('@Events/dashboard/competition.html.twig');
     }
     public function publicityAction()
     {
-        return $this->render('@Events/publicity.html.twig');
+        return $this->render('@Events/dashboard/publicity.html.twig');
     }
     public function fronteventAction()
     {

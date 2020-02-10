@@ -8,11 +8,11 @@ class DefaultController extends Controller
 {
     public function publicationAction()
     {
-        return $this->render('@Forum/publication.html.twig');
+        return $this->render('@Forum/dashboard/publication.html.twig');
     }
     public function reclamationAction()
     {
-        return $this->render('@Forum/reclamation.html.twig');
+        return $this->render('@Forum/dashboard/reclamation.html.twig');
     }
 
     public function frontblogAction()
