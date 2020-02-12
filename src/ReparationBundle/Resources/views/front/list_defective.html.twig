@@ -1,0 +1,11 @@
+<h1>List pieces</h1>
+{% for piece in pieces %}
+    <ul>
+        <li>{{ piece.nom }}</li>
+        <li>{{ piece.categorie }}</li>
+        <li>{{ piece.description }}</li>
+        <li>{{ piece.image }}</li>
+       <li><a href="{{ path('reparation_front_repare',{'idP': piece.id,'idR': app.user.id}) }}">repare</a></li>
+    </ul>
+{% endfor %}
+

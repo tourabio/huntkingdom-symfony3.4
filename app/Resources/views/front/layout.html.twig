@@ -103,9 +103,12 @@
                                         </ul>
                                     </li>
                                     <li>
-                                        <a href="#">Reparation</a>
+                                        <a href="">Reparation</a>
                                         <ul>
-                                            <li><a href="{{ path('reparation_front') }}">Reparation</a></li>
+                                            <li><a href="{{ path('reparation_front_add_defective') }}">Add defective part</a></li>
+                                            {% if is_granted('ROLE_REPAIRER')%}
+                                                <li><a href="{{ path('reparation_front_list_defective') }}">consult defective parts</a></li>
+                                            {% endif %}
                                             <li><a href="{{ path('promotion_front') }}">Promotion</a></li>
                                         </ul>
                                     </li>
@@ -241,6 +244,8 @@
 {% block content %}
 
 {% endblock content %}
+
+
 <footer class="jarallax">
     <div class="footer-top section">
         <div class="container">
