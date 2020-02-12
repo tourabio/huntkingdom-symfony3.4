@@ -3,8 +3,9 @@
 namespace ReparationBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Validator\Constraints as Assert;
 
-/**
+    /**
  * Piecesdefectueuses
  *
  * @ORM\Table(name="piecesdefectueuses")
@@ -17,6 +18,28 @@ class Piecesdefectueuses
      * @ORM\JoinColumn(name="userId", referencedColumnName="id")
      */
     private $user;
+    /**
+     * @var bool
+     *
+     * @ORM\Column(name="reserved", type="boolean")
+     */
+    private $reserved;
+
+    /**
+     * @return bool
+     */
+    public function isReserved()
+    {
+        return $this->reserved;
+    }
+
+    /**
+     * @param bool $reserved
+     */
+    public function setReserved($reserved)
+    {
+        $this->reserved = $reserved;
+    }
 
     /**
      * @return mixed
@@ -83,7 +106,7 @@ class Piecesdefectueuses
 
     /**
      * @var string
-     *
+     * @Assert\File(mimeTypes={ "image/png", "image/jpeg" })
      * @ORM\Column(name="image", type="string", length=255)
      */
     private $image;

@@ -29,6 +29,11 @@ class DefaultController extends Controller
             $em = $this->getDoctrine()->getManager();
             $user = $this->getUser();
             $piece->setUser($user);
+            $piece->setReserved(false);
+            $file = $piece->getImage();
+            $fileName = md5(uniqid()).'.'.$file->guessExtension();
+            $file->move($this->getParameter('photos_directory'), $fileName);
+            $piece->setImage($fileName);
             $em->persist($piece);
             $em->flush();
         }
@@ -44,18 +49,12 @@ class DefaultController extends Controller
 
     public function list_defectiveAction()
     {
-        $pieces = $this->getDoctrine()->getRepository('ReparationBundle:Piecesdefectueuses')->findAll();
+        $pieces = $this->getDoctrine()->getRepository('ReparationBundle:Piecesdefectueuses')->findDefective();
         return $this->render('@Reparation/front/list_defective.html.twig', [
             'pieces' => $pieces,
         ]);
     }
-    public function castAs($newClass) {
-        $obj = new $newClass;
-        foreach (get_object_vars($this) as $key => $name) {
-            $obj->$key = $name;
-        }
-        return $obj;
-    }
+
     public function repareAction($idP,$idR,Request $request)
     {
 
@@ -66,6 +65,7 @@ class DefaultController extends Controller
         $form->handleRequest($request);
         if ($form->isSubmitted() && $form->isValid()) {
             $em = $this->getDoctrine()->getManager();
+            $piece->setReserved(true);
             $reparation->setPiecedefectueuse($piece);
             $reparation->setReparateur($repairer);
             $em->persist($reparation);

@@ -1,9 +1,7 @@
 list_reparation:
     path:     /reparation
     defaults: { _controller: ReparationBundle:Default:reparation }
-list_promotion:
-    path:     /promotion
-    defaults: { _controller: ReparationBundle:Default:promotion }
+
 
 reparation_front_add_defective:
     path:     /add_defective

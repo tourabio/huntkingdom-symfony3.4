@@ -4,6 +4,7 @@ namespace ReparationBundle\Form;
 
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
+use Symfony\Component\Form\Extension\Core\Type\FileType;
 use Symfony\Component\Form\Extension\Core\Type\SubmitType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
@@ -23,7 +24,7 @@ class PiecesdefectueusesType extends AbstractType
             ],
             ])
             ->add('description')
-            ->add('image')
+            ->add('image', FileType::class, array('label' => 'Photo (png, jpeg)'))
             ->add('Send',SubmitType::class);
     }/**
      * {@inheritdoc}

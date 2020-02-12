@@ -10,4 +10,17 @@ namespace ReparationBundle\Repository;
  */
 class PiecesdefectueusesRepository extends \Doctrine\ORM\EntityRepository
 {
+
+    public function findDefective(){
+        return $this->getEntityManager()
+            ->createQuery(
+                'SELECT p
+                FROM ReparationBundle:Piecesdefectueuses p
+                WHERE p.reserved =:yep'
+            )
+            ->setParameter('yep', false)
+            ->getResult();
+
+
+    }
 }
