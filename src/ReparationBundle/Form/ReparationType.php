@@ -18,7 +18,6 @@ class ReparationType extends AbstractType
             ->add('etat')
             ->add('duree')
             ->add('description')
-            ->add('repare',SubmitType::class)
         ;
     }/**
      * {@inheritdoc}

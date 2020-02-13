@@ -24,8 +24,7 @@ class PiecesdefectueusesType extends AbstractType
             ],
             ])
             ->add('description')
-            ->add('image', FileType::class, array('label' => 'Photo (png, jpeg)'))
-            ->add('Send',SubmitType::class);
+            ->add('image', FileType::class, array('label' => 'Photo (png, jpeg)'));
     }/**
      * {@inheritdoc}
      */

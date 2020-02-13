@@ -36,6 +36,9 @@ class DefaultController extends Controller
             $piece->setImage($fileName);
             $em->persist($piece);
             $em->flush();
+            return $this->redirectToRoute('main_front');
+
+
         }
 
 
@@ -70,11 +73,15 @@ class DefaultController extends Controller
             $reparation->setReparateur($repairer);
             $em->persist($reparation);
             $em->flush();
+            return $this->redirectToRoute('reparation_front_list_defective');
+
         }
 
 
         return $this->render('@Reparation/front/repaire.html.twig', [
             'form' => $form->createView(),
+            'idP'=>$idP,
+            'idR'=>$idR
         ]);
     }
     public function frontpromotionAction()
