@@ -3,18 +3,54 @@ list_locations:
     defaults: { _controller: ServiceBundle:Default:location }
 list_accommodation:
     path:     /hebergement
-    defaults: { _controller: ServiceBundle:Default:hebergement }
+    defaults: { _controller: ServiceBundle:Service:afficherhebergement }
+one_accommodation:
+    path:     /one_accommodation/{id}
+    defaults: { _controller: ServiceBundle:Service:afficherunhebergement }
+one_transport:
+    path:     /one_transport/{id}
+    defaults: { _controller: ServiceBundle:Service:afficheruntransport }
+supprimer_accommodation:
+    path:     /supprimerhebergement/{id}
+    defaults: { _controller: ServiceBundle:Service:supprimerhebergement }
+modifier_accommodation:
+    path:     /modifierhebergement/{id}
+    defaults: { _controller: ServiceBundle:Service:modifierhebergement }
+ajouter_accommodation:
+    path:     /ajouterhebergement
+    defaults: { _controller: ServiceBundle:Service:ajouterhebergement }
 list_transport:
     path:     /transport
-    defaults: { _controller: ServiceBundle:Default:transport }
+    defaults: { _controller: ServiceBundle:Service:affichertransport }
+supprimer_transport:
+    path:     /supprimertransport/{id}
+    defaults: { _controller: ServiceBundle:Service:supprimertransport }
+modifier_transport:
+    path:     /modifiertransport/{id}
+    defaults: { _controller: ServiceBundle:Service:modifiertransport }
+ajouter_transport:
+    path:     /ajoutertransport
+    defaults: { _controller: ServiceBundle:Service:ajoutertransport }
 
 location_front:
     path:     /location_front
     defaults: { _controller: ServiceBundle:Default:frontlocation }
+my_front:
+    path:     /my_front
+    defaults: { _controller: ServiceBundle:Service:affichermyfront }
 accommodation_front:
     path:     /accommodation_front
-    defaults: { _controller: ServiceBundle:Default:fronthebergement }
+    defaults: { _controller: ServiceBundle:Service:afficherhebergementfront }
+one_accommodation_front:
+    path:     /one_accommodation_front/{id}
+    defaults: { _controller: ServiceBundle:Service:afficherunhebergementfront }
 transport_front:
     path:     /transport_front
-    defaults: { _controller: ServiceBundle:Default:fronttransport }
+    defaults: { _controller: ServiceBundle:Service:affichertransportfront }
+one_transport_front:
+    path:     /one_transport_front/{id}
+    defaults: { _controller: ServiceBundle:Service:afficheruntransportfront }
+add_reservation_front:
+    path:     /add_reservation_front/{id}
+    defaults: { _controller: ServiceBundle:Service:reserverhebergementfront }
 

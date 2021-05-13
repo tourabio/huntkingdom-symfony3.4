@@ -1,0 +1,90 @@
+{% extends 'front/layout.html.twig' %}
+
+{% block content %}
+<section class="breadcumb-area jarallax bg-img af">
+    <div class="breadcumb">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                    <div class="content">
+                        <h2>Training List</h2>
+
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </div>
+</section>
+<section class="events-area section bg-img jarallax">
+    <div class="container">
+        <div class="row">
+            <div class="col-md-12 col-sm-12">
+                <div class="section-heading">
+                    <h2>Accepting Training</h2>
+
+                    <div class="col-sm-3">
+                        <div class="sibebar">
+                           <div class="wighet categories">
+                              <h3>Rem<span>inder</span></h3>
+                               <ul>
+
+                                    {% for items in entrOui %}
+
+
+
+                                    {% set difference = date(items.dateEnt).diff(date()) %}
+                                    {% set leftDays = difference.days %}
+                                        {% if  leftDays > 0 %}
+                                    <li><i class="fa fa-angle-double-right"></i>Training for {{ items.user }} after <span>{{ leftDays }} days</span></li>
+                                            {% else %}
+                                                <li><i class="fa fa-angle-double-right"></i>Training for {{ items.user }} Today</li>
+                                        {% endif %}
+
+                                    {% endfor %}
+                                </ul>
+                           </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-12 col-sm-12">
+                <div class="panel-group" id="accordion" role="tablist" aria-multiselectable="true">
+                    {% for entrainement in entrainements %}
+                    <div class="panel panel-default">
+                        <div class="panel-heading" role="tab" id="heading1">
+                            <a role="button" data-toggle="collapse" data-parent="#accordion" href="#collapseOne" aria-expanded="true" aria-controls="collapseOne" class="cnc">
+                                <h3>Category: {{ entrainement.categorie }}</h3>
+                                <ul>
+                                    <li><i class="far fa-calendar"></i><span>{{ entrainement.dateEnt|date('Y-m-d') }}</span></li>
+                                    <li><i class="fas fa-map-marker-alt"></i><span>{{ entrainement.lieu }}</span></li>
+                                </ul>
+                            </a>
+
+                        </div>
+                        <div id="collapseOne" class="panel-collapse collapse in" role="tabpanel" aria-labelledby="heading1">
+                            <div class="panel-body">
+                                <p>User Name : {{ entrainement.user}} <br> Price: {{ entrainement.prix }} Hours: {{ entrainement.nbHeures }}</p>
+                                <div class="col-sm-8 pd-0">
+                                    <div class="events-img">
+                                        <div><img src="{{ asset('front/assets/images/animals/'~entrainement.animal.getImageAnimal()) }}" alt="" /></div>
+                                        <div><img src="{{ asset('front/assets/images/banner/'~entrainement.produit.getImage()) }}" alt="" /></div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div style="font-size: 30px;text-align: center;color: #fea526">Accept<br>
+
+                                <a href="{{ path('recuperer_entraineur',{'id':entrainement.id})}}" class="btn1">Yes</a>
+                                <a href="{{ path('delete_entr',{'id':entrainement.id})}}" class="btn2">No</a>
+                            </div>
+                        </div>
+                    </div>
+                    {% endfor %}
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+{% endblock content %}

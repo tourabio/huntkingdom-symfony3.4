@@ -1,3 +1,90 @@
+{% extends 'dashboard/base.html.twig' %}
+
+{% block content %}
+    <!--main content start-->
+    <section id="main-content">
+        <section class="wrapper">
+            <div class="row">
+                <div class="col-lg-12">
+                    <h3 class="page-header"><i class="fa fa-table"></i> products</h3>
+                    <ol class="breadcrumb">
+                        <li><i class="fa fa-home"></i><a href="{{path('main_dashboard')}}">Home</a></li>
+                        <li><i class="fa fa-table"></i>products</li>
+                    </ol>
+                </div>
+            </div>
+            <!-- page start-->
+            <ul class="nav top-menu">
+                <li>
+                    <form  action="{{ path('list_products') }}" class="navbar-form" method="get">
+                        <input class="form-control" name="filter" type="text" placeholder="Search for libProd">
+                    </form>
+                </li>
+            </ul><br>
+
+            {# total items count #}
+            <div class="count" >
+              <h4 style="color: #0059fc"><b>  {{ produits.getTotalItemCount }} products found  </b></h4>
+            </div>
+            <div class="row">
+                <div class="col-lg-12">
+                    <section class="panel">
+
+
+                        <table class="table table-striped table-advance table-hover" id="myTable">
+                            <tbody>
+                            <tr>
+                                <th{% if produits.isSorted('p.libProd') %} class="sorted"{% endif %}><i class="icon_profile"></i> {{ knp_pagination_sortable(produits, 'libProd', 'p.libProd')|raw }}</th>
+                                <th{% if produits.isSorted('p.prix') %} class="sorted"{% endif %}><i class="icon_wallet"></i> {{ knp_pagination_sortable(produits, 'price', 'p.prix')|raw }}</th>
+                                <th><i class="icon_box-checked"></i> prixFinale</th>
+                                <th><i class="icon_wallet"></i> description</th>
+                                <th><i class="icon_mail_alt"></i> qteProd</th>
+                                <th><i class="icon_datareport"></i> dateAjout</th>
+                                <th><i class="icon_mobile"></i> type</th>
+                                <th><i class="icon_image"></i> image</th>
+                                <th><i class="icon_cogs"></i> Action</th>
+                            </tr>
+                            {% for produit in produits %}
+                                <tr>
+                                    <td>{{ produit.libProd }}</td>
+                                    <td>{{ produit.prix }}</td>
+                                    <td>{{ produit.prixFinale }}</td>
+                                    <td>{{ produit.description }}</td>
+                                    <td>{{ produit.qteProd }}</td>
+                                    <td>{{ produit.dateAjout|date }}</td>
+                                    <td>{{ produit.type }}</td>
+                                    <td><img src="{{ asset('java/huntkingdom/src/Uploads/' ~ produit.image) }}" width="70" height="70" alt="" /></td>
+
+                                    <td>
+                                        <div class="btn-group">
+                                            <a class="btn btn-primary" href="{{ path('affect_promotion',{'id': produit.id}) }}"><i class="icon_pencil-edit_alt"></i>affect promotion</a>
+                                        </div>
+                                    </td>
+                                </tr>
+                            {% endfor %}
+                            </tbody>
+                        </table>
+                        {# display navigation #}
+                        <div class="navigation text-center">
+                            {{ knp_pagination_render(produits) }}
+                        </div>
+
+                    </section>
+                </div>
+            </div>
+            <!-- page end-->
+        </section>
+    </section>
+
+{% endblock %}
+
+
+
+
+
+
+
+{#
 <h1>product list : </h1>
 {% for produit in produits %}
     <ul>
@@ -12,3 +99,5 @@
         </li><li><a href="{{ path('affect_promotion',{'id': produit.id}) }}">affect promotion</a></li>
     </ul>
 {% endfor %}
+
+#}

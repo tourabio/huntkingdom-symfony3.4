@@ -1,0 +1,200 @@
+{% extends 'dashboard/base.html.twig' %}
+
+{% block content %}
+
+    <section id="main-content">
+        <section class="wrapper">
+
+            <div class="row">
+                <div class="col-lg-12">
+                    <section class="panel">
+                        <header class="panel-heading">
+                            Form Add Product
+                        </header>
+                        <div class="panel-body">
+                            <div class="form">
+                                <div class="form-validate form-horizontal" id="feedback_form">
+                                    {{ form_start(form,{'attr': {'novalidate': 'novalidate','id':'formproduit'} }) }}
+                                    <div class="form-group ">
+                                        <label for="cname" class="control-label col-lg-2"> Libelle <span class="required">*</span></label>
+                                        <div class="col-lg-10">
+                                            {{ form_widget(form.libProd,{'attr':{'type':'text','class':'form-control'},'id':'libProd'}) }}
+                                        </div>
+                                        <div class="alert alert-danger" id="errorlibProd" hidden>
+                                            Choose name
+                                        </div>
+                                    </div>
+                                    <div class="form-group ">
+                                        <label for="cname" class="control-label col-lg-2"> Price <span class="required">*</span></label>
+                                        <div class="col-lg-10">
+                                            {{ form_widget(form.prix,{'attr':{'type':'text','class':'form-control'},'id':'prix'}) }}
+                                        </div>
+                                        <div class="alert alert-danger" id="errorprix" hidden>
+                                            You should choice right price
+                                        </div>
+                                    </div>
+                                    <div class="form-group ">
+                                        <label class="control-label col-lg-2">Description<span class="required">*</span></label>
+                                        <div class="col-lg-10">
+                                            {{ form_widget(form.description,{'attr':{'type':'number','class':'form-control'},'id':'description'}) }}
+                                        </div>
+                                        <div class="alert alert-danger" id="errordescription" hidden>
+                                            You should write description
+                                        </div>
+                                    </div>
+                                    <div class="form-group ">
+                                        <label for="cname" class="control-label col-lg-2">Quantite produit <span class="required">*</span></label>
+                                        <div class="col-lg-10">
+                                            {{ form_widget(form.qteProd,{'attr':{'type':'number','class':'form-control'},'id':'qteProd'}) }}
+                                        </div>
+                                        <div class="alert alert-danger" id="errorqteProd" hidden>
+                                            You should choice right quantite Product (  Product can't be negetive )
+                                        </div>
+                                    </div>
+                                    <div class="form-group ">
+                                        <label for="cname" class="control-label col-lg-2"> Date <span class="required">*</span></label>
+                                        <div class="col-lg-10">
+                                            {{ form_widget(form.dateAjout,{'attr':{'type':'date','class':'form-control'}}) }}
+                                        </div>
+                                    </div>
+                                    <div class="form-group ">
+                                        <label for="cname" class="control-label col-lg-2"> Picture <span class="required">*</span></label>
+                                        <div class="col-lg-10">
+                                            {{ form_widget(form.image,{'attr':{'type':'textarea','class':'form-control'}}) }}
+                                        </div>
+                                        <div class="form-group ">
+                                            <label for="cname" class="control-label col-lg-2">Type <span class="required">*</span></label>
+                                            <div class="col-lg-10">
+                                                {{ form_widget(form.type,{'attr':{'type':'number','class':'form-control','placeholder':'nbParticipants...'},'id':'nbParticipants'}) }}
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="form-group">
+                                        <div class="col-lg-offset-2 col-lg-10">
+                                            {{ form_widget(form.Modify, {'attr': {'class': 'btn btn-primary'}})}}
+                                        </div>
+                                    </div>
+                                    {{ form_end(form) }}
+                                </div>
+
+                            </div>
+
+                        </div>
+                    </section>
+                </div>
+            </div>
+        </section>
+    </section>
+    <script src="{{ asset('dashboard/js/jquery-1.8.3.min.js') }}"></script>
+    <script type="text/javascript">
+        $("#formproduit").submit(function(e){
+
+            /****  Libelle *****/
+            if ( $("#libProd").val()==""){
+                $("#errorlibProd").show();
+                e.preventDefault();
+
+            }
+            else if (!$("#libProd").val().match(/^[a-z]|[0-9]+$/i))
+            {
+                $("#errorlibProd").show().text("field does not contain symbols");
+                e.preventDefault();
+            }
+            else
+            {
+                $("#errorlibProd").hide();
+            }
+
+
+            /****  Price *****/
+
+            if ( $("#prix").val()==""){
+                $("#errorprix").show();
+                e.preventDefault();
+
+            }
+            else if ($("#prix").val()<0)
+            {
+                $("#errorprix").show().text(" Price can't be negetive ");
+                e.preventDefault();
+            }
+            else
+            {
+                $("#errorprix").hide();
+            }
+
+
+            /****  Description *****/
+
+            if ( $("#description").val()==""){
+                $("#errordescription").show().text("Choose Description ");
+                e.preventDefault();
+
+            }
+            else if (!$("#description").val().match(/^[a-z]|[0-9]+$/i))
+            {
+                $("#errordescription").show().text("field does not contain symbols");
+                e.preventDefault();
+            }
+            else
+            {
+                $("#errordescription").hide();
+            }
+
+
+            /****  Quantite Produit *****/
+            if ( $("#qteProd").val()==""){
+                $("#errorqteProd").show();
+                e.preventDefault();
+
+            }
+            else if ($("#qteProd").val()<0)
+            {
+                $("#errorqteProd").show().text(" Qantity product can't be negetive ");
+                e.preventDefault();
+            }
+            else
+            {
+                $("#errorqteProd").hide();
+            }
+            {#
+
+                                                            /****  dateFin *****/
+
+                                                            if ( $("#dateFin").val()==""){
+                                                                $("#errordateFin").show();
+                                                                e.preventDefault();
+
+                                                            }
+                                                            else
+                                                            {
+                                                                $("#errordateFin").hide();
+                                                            }
+
+                                                            /****  dateDebut *****/
+
+                                                            if ( $("#dateDebut").val()==""){
+                                                                $("#errordateDebut").show();
+                                                                e.preventDefault();
+
+                                                            }
+                                                            else
+                                                            {
+                                                                $("#errordateDebut").hide();
+                                                            }
+
+
+
+
+
+                                               #}
+
+        });
+
+
+
+    </script>
+
+
+
+{% endblock %}

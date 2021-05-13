@@ -23,4 +23,37 @@ class PiecesdefectueusesRepository extends \Doctrine\ORM\EntityRepository
 
 
     }
+    public function find_my_Defective($idUser){
+        return $this->getEntityManager()
+            ->createQuery(
+                'SELECT p
+                FROM ReparationBundle:Piecesdefectueuses p
+                WHERE p.reserved =:yep AND p.user=:id'
+            )
+            ->setParameter('yep', true)
+            ->setParameter('id', $idUser)
+            ->getResult();
+    }
+    public function count_myReady($idUser){
+        return $this->getEntityManager()
+            ->createQuery(
+                'SELECT count(p.id)
+                FROM ReparationBundle:Piecesdefectueuses p
+                WHERE p.etat =:yep AND p.user=:id'
+            )
+            ->setParameter('yep', true)
+            ->setParameter('id', $idUser)
+            ->getSingleScalarResult();
+    }
+
+    public function search_by_name($name){
+        return $this->getEntityManager()
+            ->createQuery(
+                'SELECT p
+                FROM ReparationBundle:Piecesdefectueuses p
+                WHERE p.nom LIKE :str'
+            )
+            ->setParameter('str', '%'.$name.'%')
+            ->getResult();
+    }
 }

@@ -21,4 +21,52 @@ class ProduitRepository extends \Doctrine\ORM\EntityRepository
             ->setParameter('id',$id)
             ->getSingleResult();
     }
+
+    public function findProduitWithFineshed($date){
+        return $this->getEntityManager()
+            ->createQuery(
+                'SELECT p
+                FROM ProductBundle:Produit p
+                INNER JOIN ProductBundle:promotion m
+                WHERE p.promotion=m.id AND m.dateFin<=:current'
+            )
+            ->setParameter('current', $date)
+            ->getResult();
+    }
+    public function findProductName()
+    {
+        $Query=$this->getEntityManager()->createQuery(
+            "select P.libProd from ProductBundle:Produit P ")
+        ;
+        return $Query->getResult();
+    }
+
+    public function findIdProduct($produit)
+    {
+        $Query=$this->getEntityManager()->createQuery(
+            "select P from ProductBundle:Produit P where P.libProd = :libProd ")
+            ->setParameter('libProd',$produit);
+
+
+        return $Query->getResult();
+    }
+    public function findProductId($produit)
+    {
+        $Query=$this->getEntityManager()->createQuery(
+            "select P from ProductBundle:Produit P where P.id = :id ")
+            ->setParameter('id',$produit);
+
+
+        return $Query->getResult();
+    }
+    public function list_promotion()
+    {
+        return $this->getEntityManager()
+            ->createQuery(
+                'SELECT p
+                FROM ProductBundle:Produit p
+                WHERE p.prix>p.prixFinale'
+            )
+            ->getResult();
+    }
 }

@@ -1,9 +1,154 @@
 {% extends 'front/layout.html.twig' %}
+
 {% block content %}
+
+    <section class="breadcumb-area jarallax bg-img af">
+        <div class="breadcumb">
+            <div class="container">
+                <div class="row">
+                    <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                        <div class="content">
+                            <h2>Your Plan</h2>
+
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+    <section class="price-area section bg-img jarallax">
+        <div class="container">
+            <div class="row">
+                <div class="col-md-12 col-sm-12">
+                    <div class="section-heading">
+                        <h2>Competition </h2>
+                        <p>All modern weaponts can appreciate our broad services akshay handge pharetra, eratd fermentum feugiat, gun are best velit mauris aks egestasut aliquam.</p>
+                    </div>
+                </div>
+            </div>
+            {% for competition in competitions %}
+                <div class="row">
+                    <div class="col-md-12 col-sm-12">
+
+                        <div class="price-lists">
+                            <div class="phead">
+
+                                <h3>Compete for</h3>
+                                <div class="prices">
+                                    <strong><i class="fas fa-dollar-sign"></i>{{ competition.nom }}</strong>
+                                    <span>/for one Person</span>
+                                </div>
+                            </div>
+                            <div class="pbody">
+                                <ul>
+                                    <li><span>Starts: {{competition.dateDebut.date|date('Y-m-d') }}</span></li>
+                                    <li><span>Ends: {{ competition.dateFin.date|date('Y-m-d') }}</span></li>
+                                    <li><span>Category: {{ competition.categorie }}</span></li>
+                                    <li><span>Place: {{ competition.lieu }}</span></li>
+                                    {% if competition.dateDebut<date() %}
+                                        <li><span> Competition already started or finished</span></li>
+                                    {% else %}
+                                        {% if competition.nbParticipants==0 %}
+                                            <li><span> No more places</span></li>
+                                        {% else %}
+                                            {% if not competition.users.contains(app.user) %}
+                                                <li><span> {{ competition.nbParticipants }} Participants to go</span></li>
+
+                                                <li> <a class="btn1" href="{{path('event_many',{id:competition.id}) }}"><i class="icon_close_alt2"></i>Participate</a></li>
+
+                                            {% else %}
+                                                <li><span> you have already participated</span></li>
+                                            {% endif %}
+                                        {% endif %}
+                                    {% endif %}
+                                </ul>
+
+                            </div>
+                        </div>
+
+
+                    </div>
+                </div>
+            {% endfor %}
+        </div>
+
+    </section>
+    <section class="event-manegment section">
+        <div class="container">
+            <div class="row">
+                <div class="col-md-6 col-sm-12">
+                    <div class="section-heading2">
+                        <h2>Speakers</h2>
+                        <div class="speakers-slider owl-carousel owl-theme" style="opacity: 1; display: block;">
+                            <div class="owl-wrapper-outer"><div class="owl-wrapper" style="width: 2400px; left: 0px; display: block; transition: all 1000ms ease 0s; transform: translate3d(0px, 0px, 0px);"><div class="owl-item" style="width: 240px;"><div class="sp-list">
+                                            <figure><img src="assets/images/events/5.jpg" alt=""></figure>
+                                            <div class="con">
+                                                <a href="#">Jhon Doe</a>
+                                            </div>
+                                        </div></div><div class="owl-item" style="width: 240px;"><div class="sp-list">
+                                            <figure><img src="assets/images/events/6.jpg" alt=""></figure>
+                                            <div class="con">
+                                                <a href="#">Jhon Doe</a>
+                                            </div>
+                                        </div></div><div class="owl-item" style="width: 240px;"><div class="sp-list">
+                                            <figure><img src="assets/images/events/7.jpg" alt=""></figure>
+                                            <div class="con">
+                                                <a href="#">Jhon Doe</a>
+                                            </div>
+                                        </div></div><div class="owl-item" style="width: 240px;"><div class="sp-list">
+                                            <figure><img src="assets/images/events/8.jpg" alt=""></figure>
+                                            <div class="con">
+                                                <a href="#">Jhon Doe</a>
+                                            </div>
+                                        </div></div><div class="owl-item" style="width: 240px;"><div class="sp-list">
+                                            <figure><img src="assets/images/events/5.jpg" alt=""></figure>
+                                            <div class="con">
+                                                <a href="#">Jhon Doe</a>
+                                            </div>
+                                        </div></div></div></div>
+
+
+
+
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-6 col-sm-12">
+                    <div class="event-schedule">
+                        <div class="section-heading2">
+                            <h2>Event schedule</h2></div>
+                        <table class="table table-hover">
+                            <tbody>
+                            <tr>
+                                <td><strong>6:00pm - 6:05pm</strong></td>
+                                <td><span>opening</span></td>
+                                <td><a href="#">details</a></td>
+                            </tr>
+                            <tr>
+                                <td><strong>6:00pm - 6:05pm</strong></td>
+                                <td><span>opening</span></td>
+                                <td><a href="#">details</a></td>
+                            </tr>
+                            <tr>
+                                <td><strong>6:00pm - 6:05pm</strong></td>
+                                <td><span>opening</span></td>
+                                <td><a href="#">details</a></td>
+                            </tr>
+                            <tr>
+                                <td><strong>6:00pm - 6:05pm</strong></td>
+                                <td><span>opening</span></td>
+                                <td><a href="#">details</a></td>
+                            </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
 
 
 {% endblock content %}
-
 
 
 

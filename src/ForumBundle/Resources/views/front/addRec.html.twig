@@ -1,0 +1,122 @@
+{% extends 'front/layout.html.twig' %}
+
+{% block content %}
+
+
+    <section class="breadcumb-area jarallax bg-img af">
+        <div class="breadcumb">
+            <div class="container">
+                <div class="row">
+                    <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                        <div class="content">
+                            <h2>Add your complaint</h2>
+                            <ul>
+                                <li><a href="index.html">Home</a></li>
+                                <li><a href="javascript:void(0)">Complaints</a></li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+    <!--Breadcumb area end here-->
+    <!--Contact area start here-->
+    <section class="contact-area section">
+        <div class="container">
+
+
+            <div class="row">
+                <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                    <div class="section-heading">
+                        <h2>Please send us your claims</h2>
+                        <p>Send us your claims with any service provided...</p>
+                    </div>
+                </div>
+                <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                    <div class="form-area">
+                        {{ form_start(Form,{'attr': {'novalidate': 'novalidate','id':'formrec'} }) }}
+                        <fieldset>
+                            <div class="row">
+                                <div class="col-sm-4 col-xs-12 feld">
+                                    {{ form_widget(Form.title,{'attr':{'type':'text','class':'form-control','placeholder':'Title...'},'id':'title'}) }}
+                                </div>
+                                <div class="col-sm-4 col-xs-12 feld">
+                                    {{ form_errors(Form.title) }}
+                                </div>
+                            </div>
+                        </fieldset>
+                        <fieldset>
+                            <div class="feld">
+                                {{ form_widget(Form.descriptionRec,{'attr':{'type':'textarea','class':'form-control','placeholder':'Description...'},'id':'descriptionRec'}) }}
+                            </div>
+                            <div class="col-sm-4 col-xs-12 feld">
+                                {{ form_errors(Form.descriptionRec) }}
+                            </div>
+                        </fieldset>
+                        <div class="btn-area text-center">
+                            {{ form_widget(Form.validate, {'attr': {'class': 'btn btn-primary'}})}}
+                        </div>
+                        {{ form_end(Form) }}
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+    <!--Contact area end here-->
+    <!--Subscribe area start here-->
+    <section class="subscribe-area">
+        <div class="container">
+            <div class="row">
+                <div class="col-md-12 col-sm-12">
+                    <div class="subscribe">
+                        <span class="ico"><i class="far fa-envelope"></i></span>
+                        <div class="conts">
+                            <h2>Get Our Latest News</h2>
+                            <p>Subscribe our Newsletter Now !</p>
+                        </div>
+                        <form>
+                            <input type="email" placeholder="Email Address">
+                            <button type="submit" class="btn1">Subscribe</button>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+{% endblock content %}
+
+{% block js %}
+    <script type="text/javascript">
+        $("#formrec").submit(function(e){
+
+            /****  adresse *****/
+            if ( $("#title").val()==""){
+                $("#errortitle").attr('class','form-group has-error');
+                $("#title").attr('placeholder','enter title');
+                e.preventDefault();
+
+            }
+            else
+            {
+                $("#errortitle").attr('class','form-group');
+            }
+
+            /****  description *****/
+            if ( $("#descriptionRec").val().length<10){
+                $("#errordescription").attr('class','form-group has-error');
+                $("#descriptionRec").attr('placeholder','enter description');
+                e.preventDefault();
+
+            }
+            else
+            {
+                $("#errordescription").attr('class','form-group');
+            }
+
+
+
+        });
+    </script>
+{% endblock %}

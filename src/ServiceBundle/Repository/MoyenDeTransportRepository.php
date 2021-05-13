@@ -10,4 +10,14 @@ namespace ServiceBundle\Repository;
  */
 class MoyenDeTransportRepository extends \Doctrine\ORM\EntityRepository
 {
+    public function findEntitiesByString($str){
+        return $this->getEntityManager()
+            ->createQuery(
+                'SELECT l
+                FROM ServiceBundle:MoyenDeTransport l
+                WHERE l.marque LIKE :str'
+            )
+            ->setParameter('str', '%'.$str.'%')
+            ->getResult();
+    }
 }

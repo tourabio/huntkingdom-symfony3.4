@@ -1,0 +1,126 @@
+{% extends 'dashboard/base.html.twig' %}
+
+{% block content %}
+
+    <section id="main-content">
+        <section class="wrapper">
+
+            <div class="row">
+                <div class="col-lg-12">
+                    <section class="panel">
+                        <header class="panel-heading">
+                            Form validations
+                        </header>
+                        <div class="panel-body">
+                            <div class="form">
+                                <div class="form-validate form-horizontal" id="feedback_form" method="get" action="">
+                                    {{ form_start(form,{'attr': {'novalidate': 'novalidate','id':'formhebergement'} }) }}
+                                    <div class="form-group " id="errorMarque">
+                                        <label for="inputError" class="control-label col-lg-2">Brand <span class="required">*</span></label>
+                                        <div class="col-lg-10">
+                                            {{ form_widget(form.marque,{'attr':{'type':'text','class':'form-control'},'id':'marque'}) }}
+                                        </div>
+                                    </div>
+                                    <div class="form-group " id="errorCategorie">
+                                        <label for="inputError" class="control-label col-lg-2">Category <span class="required">*</span></label>
+                                        <div class="col-lg-10">
+                                            {{ form_widget(form.categorie,{'attr':{'type':'text','class':'form-control'},'id':'categorie'}) }}
+                                        </div>
+                                    </div>
+                                    <div class="form-group " id="errorType">
+                                        <label for="inputError" class="control-label col-lg-2">Type <span class="required">*</span></label>
+                                        <div class="col-lg-10">
+                                            {{ form_widget(form.type,{'attr':{'type':'text','class':'form-control'},'id':'type'}) }}
+                                        </div>
+                                    </div>
+                                    <div class="form-group " id="errorPrixParJour">
+                                        <label for="inputError" class="control-label col-lg-2">Price <span class="required">*</span></label>
+                                        <div class="col-lg-10">
+                                            {{ form_widget(form.prixParJour,{'attr':{'type':'number','class':'form-control','placeholder':'Prix...'},'id':'prixParJour'}) }}
+                                        </div>
+                                    </div>
+                                    <div class="form-group " id="errorImage">
+                                        <label for="inputError" class="control-label col-lg-2">image <span class="required">*</span></label>
+                                        <div class="col-lg-10">
+                                            {{ form_widget(form.image,{'attr':{'class':'form-control'},'id':'image'}) }}
+                                        </div>
+                                    </div>
+                                    <div class="form-group">
+                                        <div class="col-lg-offset-2 col-lg-10">
+                                            {{ form_widget(form.Submit, {'attr': {'class': 'btn btn-primary'}})}}
+                                        </div>
+                                    </div>
+                                    {{ form_end(form) }}
+                                </div>
+
+                            </div>
+
+                        </div>
+                    </section>
+                </div>
+            </div>
+        </section>
+    </section>
+
+
+{% endblock %}
+
+{% block js %}
+    <script type="text/javascript">
+        $("#formhebergement").submit(function(e){
+
+            /****  adresse *****/
+            if ( $("#marque").val()==""){
+                $("#errorMarque").attr('class','form-group has-error');
+                $("#marque").attr('placeholder','enter address');
+                e.preventDefault();
+
+            }
+            else
+            {
+                $("#errorMarque").attr('class','form-group');
+                $("#marque").attr('placeholder','address');
+            }
+
+
+            /****  CAPACITE *****/
+            if ( $("#categorie").val()==0){
+                $("#errorCategorie").attr('class','form-group has-error');
+                $("#categorie").attr('placeholder','enter capacity');
+                e.preventDefault();
+
+            }
+            else
+            {
+                $("#errorCategorie").attr('class','form-group');
+            }
+            /****  prixParJour *****/
+            if ( $("#prixParJour").val()<20){
+                $("#errorPrixParJour").attr('class','form-group has-error');
+                $("#prixParJour").attr('placeholder','enter the price per day');
+                e.preventDefault();
+
+            }
+            else
+            {
+                $("#errorPrixParJour").attr('class','form-group');
+            }
+
+            /****  image *****/
+            if ( $("#image").val()==""){
+                $("#errorImage").attr('class','form-group has-error');
+                $("#image").attr('placeholder','enter image');
+                e.preventDefault();
+
+            }
+            else
+            {
+                $("#errorImage").attr('class','form-group');
+            }
+
+
+
+
+        });
+    </script>
+{% endblock %}

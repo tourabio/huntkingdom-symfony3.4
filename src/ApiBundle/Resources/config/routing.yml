@@ -1,0 +1,183 @@
+api_homepage:
+    path:     /a
+    defaults: { _controller: ApiBundle:Default:index }
+list_accommodations:
+    path:     /hebergement
+    defaults: { _controller: ApiBundle:ServiceMobile:afficherhebergementfront }
+list_transports:
+    path:     /transport
+    defaults: { _controller: ApiBundle:ServiceMobile:affichertransportfront }
+addAccommodations:
+    path:     /addAccommod/{description}/{type}/{adresse}/{prixParJour}/{nbChambre}/{nblits}/{capacite}/{image}
+    defaults: { _controller: ApiBundle:ServiceMobile:addHebergement }
+addTransports:
+    path:     /addTransport/{type}/{marque}/{categorie}/{prixParJour}
+    defaults: { _controller: ApiBundle:ServiceMobile:addTransport }
+deleteTransports:
+    path:     /deleteTransport/{id}
+    defaults: { _controller: ApiBundle:ServiceMobile:supprimertransport }
+modifyTransports:
+    path:     /modifyTransport/{id}/{type}/{marque}/{categorie}/{prixParJour}/{image}
+    defaults: { _controller: ApiBundle:ServiceMobile:modifierTransport }
+list_reserv:
+    path:     /listRes/{id}
+    defaults: { _controller: ApiBundle:ServiceMobile:afficherunhebergementfront }
+list_locat:
+    path:     /listLoc/{id}
+    defaults: { _controller: ApiBundle:ServiceMobile:afficheruntransportfront }
+my_ResLoc:
+    path:     /myResLoc/{id}
+    defaults: { _controller: ApiBundle:ServiceMobile:afficherMyfront }
+my_Res:
+    path:     /myRes/{id}
+    defaults: { _controller: ApiBundle:ServiceMobile:afficherMyReservationsfront }
+my_Loc:
+    path:     /myLoc/{id}
+    defaults: { _controller: ApiBundle:ServiceMobile:afficherMyLocationsfront }
+addLocations:
+    path:     /addLocation/{idu}/{idm}/{nbjours}/{prixfinal}/{datearrivee}
+    defaults: { _controller: ApiBundle:ServiceMobile:ajouterLocation }
+addReservations:
+    path:     /addReservation/{idu}/{idh}/{nbjours}/{prixfinal}/{datearrivee}
+    defaults: { _controller: ApiBundle:ServiceMobile:ajouterReservation }
+modifyLocations:
+    path:     /modifyLocation/{id}/{nbjours}/{prixfinal}/{datearrivee}
+    defaults: { _controller: ApiBundle:ServiceMobile:modifierLocation }
+modifyReservations:
+    path:     /modifyReservation/{id}/{nbjours}/{prixfinal}/{datearrivee}
+    defaults: { _controller: ApiBundle:ServiceMobile:modifierReservation }
+deleteLocations:
+    path:     /deleteLocation/{id}
+    defaults: { _controller: ApiBundle:ServiceMobile:supprimerLocation }
+deleteReservations:
+    path:     /deleteReservation/{id}
+    defaults: { _controller: ApiBundle:ServiceMobile:supprimerReservation }
+searchHebergement:
+    path:     /searchHebergement/{str}
+    defaults: { _controller: ApiBundle:ServiceMobile:searchhebergementfront }
+searchTransport:
+    path:     /searchTransport/{str}
+    defaults: { _controller: ApiBundle:ServiceMobile:searchtransportfront }
+#image_transport:
+#    path:     /addImageTransport/{id}
+#    defaults: { _controller: ApiBundle:ServiceMobile:AddImage }
+
+
+
+training_user:
+    path:     /training_user/{id}
+    defaults: { _controller: ApiBundle:TrainingMobile:allTrainingUser }
+
+training:
+    path:     /training
+    defaults: { _controller: ApiBundle:TrainingMobile:allTraining }
+
+animalsList:
+    path:     /animalsList
+    defaults: { _controller: ApiBundle:TrainingMobile:Animals }
+
+animalsListHunting:
+    path:     /animalsListHunting
+    defaults: { _controller: ApiBundle:TrainingMobile:AnimalsHunting }
+
+animalsListFishing:
+    path:     /animalsListFishing
+    defaults: { _controller: ApiBundle:TrainingMobile:AnimalsFishing }
+productsList:
+    path:     /productsList
+    defaults: { _controller: ApiBundle:TrainingMobile:Products }
+
+animalsTraining:
+    path:     /animalsTraining/{nom}
+    defaults: { _controller: ApiBundle:TrainingMobile:AnimalsTraining }
+
+animalsTrainingId:
+    path:     /animalsTrainingId/{id}
+    defaults: { _controller: ApiBundle:TrainingMobile:AnimalsTrainingId }
+
+productsTraining:
+    path:     /productsTraining/{libProd}
+    defaults: { _controller: ApiBundle:TrainingMobile:ProductsTraining }
+
+productsTrainingId:
+    path:     /productsTrainingId/{id}
+    defaults: { _controller: ApiBundle:TrainingMobile:ProductsTrainingId }
+
+addImage:
+    path:     /addImage/{id}
+    defaults: { _controller: ApiBundle:TrainingMobile:AddImage }
+
+Stat:
+    path:     /Stat
+    defaults: { _controller: ApiBundle:TrainingMobile:Statistique }
+
+add_training:
+    path:     /add_training
+    defaults: { _controller: ApiBundle:TrainingMobile:AddTraining }
+
+add_animal:
+    path:     /add_animal
+    defaults: { _controller: ApiBundle:TrainingMobile:AddAnimal }
+
+modify_animal:
+    path:     /modify_animal/{id}/{categorie}/{nom}/{description}/{debutSaison}/{finSaison}
+    defaults: { _controller: ApiBundle:TrainingMobile:ModifyAnimal }
+
+delete_training:
+    path:     /delete_training/{id}
+    defaults: { _controller: ApiBundle:TrainingMobile:DeleteTraining }
+
+recupererEntraineur:
+    path:     /recupererEntraineur/{id}/{entraineur}
+    defaults: { _controller: ApiBundle:TrainingMobile:recupererEntraineur }
+
+UserConnected:
+    path:     /UserConnected/{name}
+    defaults: { _controller: ApiBundle:TrainingMobile:UserConnected }
+
+
+
+
+
+affichage_competition:
+    path:     /affichage_competition
+    defaults: { _controller: ApiBundle:EventMobile:affichercompetition }
+addCompetitions:
+    path:     /addCompetition/{nom}/{categorie}/{lieu}/{nbParticipants}/{dateDebut}/{dateFin}
+    defaults: { _controller: ApiBundle:EventMobile:ajoutompetition }
+affichage_pub:
+    path:     /affichage_pub
+    defaults: { _controller: ApiBundle:EventMobile:afficherPublicite }
+addPublicities:
+    path:     /addPublicity/{compagnie}/{titre}/{prix}/{description}/{dateDebut}/{dateFin}
+    defaults: { _controller: ApiBundle:EventMobile:ajoutpublicity }
+modifierPublicities:
+    path:     /modifPublicity/{id}/{compagnie}/{titre}/{prix}/{description}/{dateDebut}/{dateFin}
+    defaults: { _controller: ApiBundle:EventMobile:modifyPublicity }
+supprimerPublicities:
+    path:     /deletePublicity/{id}
+    defaults: { _controller: ApiBundle:EventMobile:supprimerpublicity }
+modifierCompetitions:
+    path:     /modifCompetition/{id}/{nom}/{categorie}/{lieu}/{nbParticipants}/{dateDebut}/{dateFin}
+    defaults: { _controller: ApiBundle:EventMobile:modifyCompetition }
+supprimerCompetitions:
+    path:     /deleteCompetition/{id}
+    defaults: { _controller: ApiBundle:EventMobile:supprimercompetition }
+listPaticipationCompetitions:
+    path:     /listParticipations/{id}
+    defaults: { _controller: ApiBundle:EventMobile:listParticipationCompetition }
+addtocompetition:
+    path:     /addToCompetition/{idc}/{idu}
+    defaults: { _controller: ApiBundle:EventMobile:addtocompetition }
+AnnulerParticipation:
+    path:     /annulerParticipation/{idu}/{idc}
+    defaults: { _controller: ApiBundle:EventMobile:annulerParticipation }
+search:
+    path:     /search/{str}
+    defaults: { _controller: ApiBundle:EventMobile:searchCompetitionfront }
+
+
+
+
+
+

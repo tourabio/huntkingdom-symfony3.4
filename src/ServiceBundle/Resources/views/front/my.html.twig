@@ -1,0 +1,112 @@
+{% extends 'front/layout.html.twig' %}
+{% block content %}
+    <!--Breadcumb area start here-->
+    <section class="breadcumb-area jarallax bg-img af">
+        <div class="breadcumb">
+            <div class="container">
+                <div class="row">
+                    <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                        <div class="content">
+                            <h2>Our Accommodations</h2>
+                            <ul>
+                                <li><a href="{{ path('main_front') }}">Home</a></li>
+                                <li><a href="javascript:void(0)">Accomodation</a></li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+    <!--Event area start here-->
+    <section class="events-area section bg-img jarallax">
+        <div class="container">
+            <div class="row">
+                <div class="col-md-12 col-sm-12">
+                    <div class="section-heading">
+                        <h2>Upcoming Events</h2>
+                        <p>All modern weaponts can appreciate our broad services akshay handge pharetra, eratd fermentum feugiat, gun are best velit mauris aks egestasut aliquam.</p>
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-md-12 col-sm-12">
+                    {% set i=0 %}
+                    {% for r in reservations %}
+                        {% set i=i+1 %}
+                    <div class="panel-group" id="accordion" role="tablist" aria-multiselectable="true">
+                        <div class="panel panel-default">
+                            <div class="panel-heading" role="tab" id="heading{{ i }}">
+                                <a role="button" data-toggle="collapse" data-parent="#accordion" href="#collapse{{ i }}" aria-expanded="true" aria-controls="collapseOne" class="cnc btncnc">
+                                    <h3>{{r.prixTot}}</h3>
+                                    <ul>
+                                        <li><i class="far fa-calendar"></i><span>{{r.dateArrivee|date}}</span></li>
+                                        <li><i class="far fa-clock"></i><span>EST 11.00 to 5.00</span></li>
+                                        <li><i class="fas fa-map-marker-alt"></i><span>121, King Street, Melbourne</span></li>
+                                    </ul>
+                                    <span class="arrows">{{i}}</span>
+                                </a>
+                            </div>
+                            <div id="collapse{{ i }}" class="panel-collapse collapse" role="tabpanel" aria-labelledby="heading{{ i }}">
+                                <div class="panel-body">
+                                    <p>Weaponts can appreciate our broad services akshay handge pharetra, eratd fermentum feugiat, gun are best velit mauris aks egestasut aliquam. This is Photoshop's version of Lorem Ipsum. Proin gravida nibh vel velit auctor aliquet. Aenean sollicitudin, lorem quis bibendum auctor. Read More</p>
+                                    <div class="col-sm-8 pd-0">
+                                        <div class="events-img">
+                                            <div><img src="" alt="" /></div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    {% endfor %}
+                </div>
+            </div>
+        </div>
+    </section>
+    <section class="events-area section bg-img jarallax">
+        <div class="container">
+            <div class="row">
+                <div class="col-md-12 col-sm-12">
+                    <div class="section-heading">
+                        <h2>Upcoming Events</h2>
+                        <p>All modern weaponts can appreciate our broad services akshay handge pharetra, eratd fermentum feugiat, gun are best velit mauris aks egestasut aliquam.</p>
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-md-12 col-sm-12">
+                    {% set j=0 %}
+                    {% for l in locations %}
+                    {% set j=j+1 %}
+                    <div class="panel-group" id="accordion" role="tablist" aria-multiselectable="true">
+                        <div class="panel panel-default">
+                            <div class="panel-heading" role="tab" id="heading{{ j }}">
+                                <a role="button" data-toggle="collapse" data-parent="#accordion" href="#collapse{{ j }}" aria-expanded="true" aria-controls="collapseOne" class="cnc btncnc">
+                                    <h3>{{ l.prixTot }}</h3>
+                                    <ul>
+                                        <li><i class="far fa-calendar"></i><span>July 25, 2017</span></li>
+                                        <li><i class="far fa-clock"></i><span>EST 11.00 to 5.00</span></li>
+                                        <li><i class="fas fa-map-marker-alt"></i><span>121, King Street, Melbourne</span></li>
+                                    </ul>
+                                    <span class="arrows">{{j}}</span>
+                                </a>
+                            </div>
+                            <div id="collapse{{ i }}" class="panel-collapse collapse" role="tabpanel" aria-labelledby="heading{{ j }}">
+                                <div class="panel-body">
+                                    <p>Weaponts can appreciate our broad services akshay handge pharetra, eratd fermentum feugiat, gun are best velit mauris aks egestasut aliquam. This is Photoshop's version of Lorem Ipsum. Proin gravida nibh vel velit auctor aliquet. Aenean sollicitudin, lorem quis bibendum auctor. Read More</p>
+                                    <div class="col-sm-8 pd-0">
+                                        <div class="events-img">
+                                            <div><img src="" alt="" /></div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    {% endfor %}
+                </div>
+            </div>
+        </div>
+    </section>
+{% endblock content %}

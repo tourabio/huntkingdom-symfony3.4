@@ -6,6 +6,8 @@ use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Routing\Annotation\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted;
+
+
 class DefaultController extends Controller
 {
     /**
@@ -40,5 +42,10 @@ class DefaultController extends Controller
     public function aboutAction()
     {
         return $this->render('front/about.html.twig');
+    }
+
+    public function please_waitAction()
+    {
+        return $this->render('front/please_wait.html.twig');
     }
 }

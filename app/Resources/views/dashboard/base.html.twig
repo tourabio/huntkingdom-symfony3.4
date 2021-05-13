@@ -36,6 +36,20 @@
         <link href="{{ asset('dashboard/css/xcharts.min.css') }}" rel=" stylesheet">
         <link href="{{ asset('dashboard/css/jquery-ui-1.10.4.min.css') }}" rel="stylesheet">
 
+        <link rel="stylesheet" type="text/css" href="{{asset('front/assets/css/bootstrap.min.css')}}">
+
+        <link rel="stylesheet" type="text/css" href="{{asset('front/assets/fonts/line-icons.css')}}">
+
+        <link rel="stylesheet" type="text/css" href="{{asset('front/assets/css/slicknav.css')}}">
+
+        <link rel="stylesheet" type="text/css" href="{{asset('front/assets/css/animate.css')}}">
+
+        <link rel="stylesheet" type="text/css" href="{{asset('front/assets/css/owl.carousel.css')}}">
+
+        <link rel="stylesheet" type="text/css" href="{{asset('front/assets/css/main.css')}}">
+
+        <link rel="stylesheet" type="text/css" href="{{asset('front/assets/css/responsive.css')}}">
+
     </head>
 
 
@@ -60,7 +74,7 @@
             <ul class="nav top-menu">
                 <li>
                     <form class="navbar-form">
-                        <input class="form-control" placeholder="Search" type="text">
+                        <input class="form-control" placeholder="Search" id="recherche" type="text">
                     </form>
                 </li>
             </ul>
@@ -226,43 +240,21 @@
                     <a data-toggle="dropdown" class="dropdown-toggle" href="#">
 
                         <i class="icon-bell-l"></i>
-                        <span class="badge bg-important">7</span>
+                        <span class="badge bg-important">{{ mgilet_notification_count( app.user) }}</span>
                     </a>
                     <ul class="dropdown-menu extended notification">
                         <div class="notify-arrow notify-arrow-blue"></div>
                         <li>
-                            <p class="blue">You have 4 new notifications</p>
+                            <p class="blue">You have {{ mgilet_notification_unseen_count(app.user) }} new notifications</p>
                         </li>
                         <li>
-                            <a href="#">
-                                <span class="label label-primary"><i class="icon_profile"></i></span>
-                                Friend Request
-                                <span class="small italic pull-right">5 mins</span>
-                            </a>
-                        </li>
-                        <li>
-                            <a href="#">
-                                <span class="label label-warning"><i class="icon_pin"></i></span>
-                                John location.
-                                <span class="small italic pull-right">50 mins</span>
-                            </a>
-                        </li>
-                        <li>
-                            <a href="#">
+
+                            <a href="{{ path('list_condidates') }}">
                                 <span class="label label-danger"><i class="icon_book_alt"></i></span>
-                                Project 3 Completed.
-                                <span class="small italic pull-right">1 hr</span>
+                                {{ mgilet_notification_render(app.user ,{'seen': false }) }}
                             </a>
-                        </li>
                         <li>
-                            <a href="#">
-                                <span class="label label-success"><i class="icon_like"></i></span>
-                                Mick appreciated your work.
-                                <span class="small italic pull-right"> Today</span>
-                            </a>
-                        </li>
-                        <li>
-                            <a href="#">See all notifications</a>
+                            <a href="">See all notifications</a>
                         </li>
                     </ul>
                 </li>
@@ -273,7 +265,7 @@
                             <span class="profile-ava">
                                 <img alt="" src="{{ asset('dashboard/img/avatar1_small.jpg') }} ">
                             </span>
-                        <span class="username">walid haguiga</span>
+                        <span class="username">{{app.user}}</span>
                         <b class="caret"></b>
                     </a>
                     <ul class="dropdown-menu extended logout">
@@ -325,7 +317,7 @@
                     </a>
                     <ul class="sub">
                         <li><a class="" href="{{ path('list_publication') }}">Publication</a></li>
-                        <li><a class="" href="{{ path('list_complaint') }}">complaint</a></li>
+                        <li><a class="" href="{{ path('list_complaint2') }}">complaint</a></li>
                     </ul>
                 </li>
                 <li class="sub-menu">
@@ -340,16 +332,7 @@
                         <li><a class="" href="{{ path('list_transport') }}">Means of transport</a></li>
                     </ul>
                 </li>
-                <li class="sub-menu">
-                    <a href="javascript:;" class="">
-                        <i class="icon_genius"></i>
-                        <span>Reparation</span>
-                        <span class="menu-arrow arrow_carrot-right"></span>
-                    </a>
-                    <ul class="sub">
-                        <li><a class="" href="{{ path('list_reparation') }}">Reparation</a></li>
-                    </ul>
-                </li>
+
 
                 <li class="sub-menu">
                     <a href="javascript:;" class="">
@@ -372,6 +355,7 @@
                     <ul class="sub">
                         <li><a class="" href="{{ path('list_training') }}">Training</a></li>
                         <li><a class="" href="{{ path('list_animals') }}">Animals</a></li>
+                        <li><a class="" href="{{ path('chart') }}">Statistic</a></li>
                     </ul>
                 </li>
 
@@ -382,10 +366,26 @@
                         <span class="menu-arrow arrow_carrot-right"></span>
                     </a>
                     <ul class="sub">
+                        <li><a class="" href="{{ path('list_product') }}">List Products</a></li>
                         <li><a class="" href="{{ path('list_products') }}">Affect Promotion</a></li>
                         <li><a class="" href="{{ path('list_promotion') }}">list Promotion</a></li>
 
                     </ul>
+
+
+                </li>
+
+                <li class="sub-menu">
+                    <a href="javascript:;" class="">
+                        <i class="icon_documents_alt"></i>
+                        <span>recrutements</span>
+                        <span class="menu-arrow arrow_carrot-right"></span>
+                    </a>
+                    <ul class="sub">
+                        <li><a class="" href="{{ path('list_condidates') }}">List condidates</a></li>
+                    </ul>
+
+
                 </li>
 
 
@@ -421,7 +421,6 @@
     <!-- Full Google Calendar - Calendar -->
     <script src="{{ asset('dashboard/assets/fullcalendar/fullcalendar/fullcalendar.js') }}"></script>
     <!--script for this page only-->
-    <script src="{{ asset('dashboard/js/calendar-custom.js') }}"></script>
     <script src="{{ asset('dashboard/js/jquery.rateit.min.js') }}"></script>
     <!-- custom select -->
     <script src="{{ asset('dashboard/js/jquery.customSelect.min.js') }}"></script>
@@ -488,6 +487,169 @@
         });
     </script>
         </section>
+{% block js %}
+
+{% endblock %}
 </body>
+<script type="text/javascript">
+    $("#formCompetition").submit(function(e){
+
+        /**** NOM *****/
+        if ( $("#nom").val()==""){
+            $("#errorNom").show();
+            e.preventDefault();
+
+        }
+        else
+        {
+            $("#errorNom").hide();
+        }
+
+
+        /**** categorie *****/
+
+        if ( $("#categorie").val()==""){
+            $("#errorCategorie").show();
+            e.preventDefault();
+
+        }
+        else
+        {
+            $("#errorCategorie").hide();
+        }
+
+
+        /**** Lieu *****/
+
+        if ( $("#lieu").val()==""){
+            $("#errorlieu").show();
+            e.preventDefault();
+        }
+        else
+        {
+            $("#errorlieu").hide();
+        }
+        /**** Lieu *****/
+
+        if ( $("#titre").val()==""){
+            $("#errortitre").show();
+            e.preventDefault();
+        }
+        else
+        {
+            $("#errortitre").hide();
+        }
+
+
+
+        /**** nbParticipants *****/
+        if ( $("#nbParticipants").val()==""){
+            $("#errornbParticipants").show();
+            $("#errornbParticipants2").hide();
+            e.preventDefault();
+
+        }
+        else if ( $("#nbParticipants").val()<=2){
+            $("#errornbParticipants2").show();
+            $("#errornbParticipants").hide();
+            e.preventDefault();
+        }
+        else
+        {
+            $("#errornbParticipants").hide();
+            $("#errornbParticipants2").hide();
+        }
+
+
+    });
+    $("#formPublicity").submit(function(e){
+
+        /**** NOM *****/
+        if ( $("#compagnie").val()==""){
+            $("#errorCompagnie").show();
+            e.preventDefault();
+
+        }
+        else
+        {
+            $("#errorCompagnie").hide();
+        }
+
+
+        /**** categorie *****/
+
+        if ( $("#description").val()==""){
+            $("#errorDescription").show();
+            e.preventDefault();
+
+        }
+        else
+        {
+            $("#errorDescription").hide();
+        }
+
+
+        /**** Lieu *****/
+
+        if ( $("#image").val()==""){
+            $("#errorimage").show();
+            e.preventDefault();
+        }
+        else
+        {
+            $("#errorimage").hide();
+        }
+
+
+
+        /**** nbParticipants *****/
+        if ( $("#prix").val()==""){
+            $("#errornbPrix").show();
+            e.preventDefault();
+
+        }
+        else
+        {
+            $("#errornbPrix").hide();
+        }
+
+
+    });
+
+    $("#formPromotion").submit(function(e) {
+
+            /****  Taux *****/
+            $taux = parseInt($("#taux").val()) ;
+            if ( $taux>1 || $taux<0 ) {
+                $("#errorTaux").show();
+                e.preventDefault();
+
+            } else {
+                $("#errorTaux").hide();
+            }
+
+
+
+
+
+
+            /****  Decription *****/
+
+            if ($("#descriptionD").val() == "") {
+                $("#errordescriptionD").show();
+                e.preventDefault();
+            } else {
+                $("#errordescriptionD").hide();
+            }
+
+
+        });
+
+
+
+
+
+</script>
+
 
 </html>

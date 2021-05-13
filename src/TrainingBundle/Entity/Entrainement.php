@@ -3,6 +3,7 @@
 namespace TrainingBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Validator\Constraints as Assert;
 
 /**
  * Entrainement
@@ -19,7 +20,7 @@ class Entrainement
     private $user;
 
     /**
-     * @ORM\ManyToOne(targetEntity="UserBundle\Entity\Trainer")
+     * @ORM\ManyToOne(targetEntity="UserBundle\Entity\User")
      * @ORM\JoinColumn(name="entraineurId", referencedColumnName="id")
      */
     private $entraineur;
@@ -62,7 +63,7 @@ class Entrainement
     /**
      * @var \DateTime
      *
-     * @ORM\Column(name="dateEnt", type="date")
+     * @ORM\Column(name="dateEnt", type="date",nullable=true)
      */
     private $dateEnt;
 
@@ -77,9 +78,16 @@ class Entrainement
      * @var string
      *
      * @ORM\Column(name="lieu", type="string", length=255)
+     * @Assert\NotBlank(message="lieu ne doit pas etre vide")
      */
     private $lieu;
 
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="accepter", type="string", length=255 ,options={"default": "encours"},nullable=true)
+     */
+    private $accepter;
 
     /**
      * Get id
@@ -210,5 +218,87 @@ class Entrainement
     {
         return $this->lieu;
     }
+
+    /**
+     * @return mixed
+     */
+    public function getUser()
+    {
+        return $this->user;
+    }
+
+    /**
+     * @param mixed $user
+     */
+    public function setUser($user)
+    {
+        $this->user = $user;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getEntraineur()
+    {
+        return $this->entraineur;
+    }
+
+    /**
+     * @param mixed $entraineur
+     */
+    public function setEntraineur($entraineur)
+    {
+        $this->entraineur = $entraineur;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getAnimal()
+    {
+        return $this->animal;
+    }
+
+    /**
+     * @param mixed $animal
+     */
+    public function setAnimal($animal)
+    {
+        $this->animal = $animal;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getProduit()
+    {
+        return $this->produit;
+    }
+
+    /**
+     * @param mixed $produit
+     */
+    public function setProduit($produit)
+    {
+        $this->produit = $produit;
+    }
+
+    /**
+     * @return string
+     */
+    public function getAccepter()
+    {
+        return $this->accepter;
+    }
+
+    /**
+     * @param string $accepter
+     */
+    public function setAccepter($accepter)
+    {
+        $this->accepter = $accepter;
+    }
+
+
 }
 

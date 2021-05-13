@@ -1,0 +1,46 @@
+{% extends 'front/layout.html.twig' %}
+
+{% block content %}
+    <section class="breadcumb-area jarallax bg-img af">
+        <div class="breadcumb">
+            <div class="container">
+                <div class="row">
+                    <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                        <div class="content">
+                            <h2>Our Animals</h2>
+
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+
+    <section class="blog-pages section">
+        <div class="container">
+            <div class="row">
+
+                <div class="row">
+                    {% for animal in animals %}
+                        <div class="col-lg-4 cl-md-6">
+                            <div class="blog-list">
+                                <figure>
+                                    <img src="{{ asset('java/huntkingdom/src/Uploads/'~animal.getImageAnimal()) }}" >
+
+                                </figure>
+
+                                <div class="content">
+                                    <h3>{{ animal.nom }}  from {{ animal.debutSaison }} to {{ animal.finSaison }} </h3>
+                                    <p>{{ animal.description }}.</p>
+                                    <a href="#" class="btn3">Read More <i class="fa fa-angle-double-right"></i></a>
+                                </div>
+                            </div>
+                        </div>
+                    {% endfor %}
+                </div>
+
+            </div>
+        </div>
+    </section>
+{% endblock content %}

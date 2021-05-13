@@ -1,0 +1,115 @@
+{% extends 'dashboard/base.html.twig' %}
+
+{% block titre %} add a post {% endblock %}
+
+{% block content %}
+    {% if is_granted('IS_AUTHENTICATED_FULLY') %}
+        <section id="main-content">
+        <section class="wrapper">
+        <div class="col-lg-12">
+        <section class="panel">
+        <header class="panel-heading">
+            Add your Post
+        </header>
+        <div class="panel-body">
+        <div class="form-group">
+            {{ form_start(Form,{'attr': {'novalidate': 'novalidate','id':'formpub'} }) }}
+
+            <div class="form-group " id="errortitle">
+                <label for="inputError" class="control-label col-lg-2">Title <span class="required">*</span></label>
+                <div class="col-lg-10">
+                    {{ form_widget(Form.title,{'attr':{'type':'text','class':'form-control','placeholder':'Title...'},'id':'title'}) }}
+                </div>
+            </div>
+            <div class="form-group " id="errordescription">
+                <label for="inputError" class="control-label col-lg-2">Description <span class="required">*</span></label>
+                <div class="col-lg-10">
+                    {{ form_widget(Form.description,{'attr':{'type':'textarea','class':'form-control','placeholder':'Description...'},'id':'description'}) }}
+                </div>
+            </div>
+            <div class="form-group " id="errorimage">
+                <label for="inputError" class="control-label col-lg-2">Image <span class="required">*</span></label>
+                <div class="col-lg-10">
+                    {{ form_widget(Form.image,{'attr':{'class':'form-control'},'id':'image'}) }}
+                </div>
+            </div>
+
+            <div class="form-group " id="errorcaptcha">
+                <label for="inputError" class="control-label col-lg-2">Captcha <span class="required">*</span></label>
+                <div class="col-lg-10">
+                    <br>
+                {{ form_widget(Form.captcha,{'id':'captcha'}) }}
+                </div>
+            </div>
+            <br><br><br><br><br><br><br><br><br>
+            <div class="form-group">
+                <div class="col-lg-offset-2 col-lg-10">
+                    {{ form_widget(Form.validate, {'attr': {'class': 'btn btn-primary'}})}}
+                </div>
+            </div>
+            {{ form_end(Form) }}
+        </div>
+        </div>
+        </section>
+        </div>
+        </section>
+        </section>
+
+
+
+    {% endif %}
+{% endblock %}
+{% block js %}
+    <script type="text/javascript">
+        $("#formpub").submit(function(e){
+
+            /****  adresse *****/
+            if ( $("#title").val()==""){
+                $("#errortitle").attr('class','form-group has-error');
+                $("#title").attr('placeholder','enter title');
+                e.preventDefault();
+
+            }
+            else
+            {
+                $("#errortitle").attr('class','form-group');
+            }
+
+            /****  description *****/
+            if ( $("#description").val().length<20){
+                $("#errordescription").attr('class','form-group has-error');
+                $("#description").attr('placeholder','enter description');
+                e.preventDefault();
+
+            }
+            else
+            {
+                $("#errordescription").attr('class','form-group');
+            }
+
+            /****  image *****/
+            if ( $("#image").val()==""){
+                $("#errorimage").attr('class','form-group has-error');
+                $("#image").attr('placeholder','enter image');
+                e.preventDefault();
+
+            }
+            else
+            {
+                $("#errorimage").attr('class','form-group');
+            }
+
+            /****  captcha *****/
+            if ( $("#captcha").val()==""){
+                $("#errorcaptcha").attr('class','form-group has-error');
+                e.preventDefault();
+
+            }
+            else
+            {
+                $("#errorcaptcha").attr('class','form-group');
+            }
+
+        });
+    </script>
+{% endblock %}

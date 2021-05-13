@@ -1,5 +1,96 @@
 {% extends 'front/layout.html.twig' %}
-{% block content %}
 
+{% block title %} Posts {% endblock title %}
+
+{% block content %}
+    <!--Breadcumb area start here-->
+    <section class="breadcumb-area jarallax bg-img af">
+        <div class="breadcumb">
+            <div class="container">
+                <div class="row">
+                    <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                        <div class="content">
+                            <h2>Posts</h2>
+                            <ul>
+                                <li><a href="{{ path('main_front') }}">Home</a></li>
+                                <li><a href="javascript:void(0)">Posts</a></li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+    <section class="blog-pages section">
+        <div class="container">
+            <div class="row">
+                <div class="blogs">
+                <div class="content-post">
+                <div class="content">
+                <h4 class="sub-title">You can also <a href="{{ path('blog_add') }}">share</a> your own experience, thoughts, questions...</h4>
+                </div>
+                </div>
+                </div>
+                <div class="col-sm-9 pd-0">
+                    {% for p in posts %}
+                        <div class="col-sm-6">
+                            <div class="blog-list">
+                                <figure>
+                                    <a href="{{ path('pub_detailed',{'id': p.id}) }} "> <img src="{{ asset('java/huntkingdom/src/Uploads/' ~ p.image) }}" width="400px" height="400px"alt="" /> </a>
+                                    <div class="date">
+                                        <span>{{p.user.username}}</span>
+                                        <a href="{{ path('more_pub',{'user': p.user.id}) }}">        <img src="{{ asset('java/huntkingdom/src/Uploads/' ~ p.user.picture) }}" width="10%" height="10%" alt="{{p.user.username}} picture" /> </a>
+                                    </div>
+                                </figure>
+                                <div class="content">
+                                    <h3>{% if p.pinned == true %}Important {% endif %}{% if p.solved == true %}Solved {% endif %}{% if p.closed == true %} Closed {% endif %}  {{p.title}}</h3>
+                                    <h4>{{p.publishedAt | date}}</h4>
+                                    {% if p.description | length > 45 %}
+                                        <p>{{p.description | slice(0,42)}} {{ '...' }}</p>
+                                    {% else %}
+                                        <p>{{p.description}} </p>
+                                    {% endif %}
+                                        <a href="{{ path('pub_detailed',{'id': p.id}) }}" class="btn3">Read More <i class="fa fa-angle-double-right"></i></a><br>
+                                    <div class="listing-bottom clearfix">
+                                        <div class="btn-group">
+                                            {% if p.user.id == app.user.id or is_granted('ROLE_ADMIN') %}
+                                                <a href="{{ path('blog_update',{'id': p.id}) }}"><button type="button" class="btn btn-sm btn-outline-info">Update</button></a>
+                                                <a href="{{ path('blog_delete',{'id': p.id}) }}"><button type="button" class="btn btn-sm btn-outline-danger">Delete</button></a>
+                                            {% if p.closed == false %}                               <a href="{{ path('close_pub',{'id': p.id}) }}"><button type="button" class="btn btn-sm btn-outline-danger">Close</button></a>
+                           {% endif %}                 {% endif %}
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                        </div>
+                    {% endfor %}
+                </div>
+                <div class="col-sm-3">
+                    <div class="sibebar">
+                        <div class="wighet search">
+                            <form>
+                                <label>
+                                    <input type="search" placeholder="Search here">
+                                </label>
+                                <button type="submit"><i class="fa fa-search"></i></button>
+                            </form>
+                        </div>
+                        <div class="wighet post">
+                            <h3>RECENT <span>NEWS</span></h3>
+                            <div class="post-list">
+                                <div class="thimb">
+                                    <a class="twitter-timeline" href="https://twitter.com/ath_amazight?ref_src=twsrc%5Etfw">Tweets by ath_amazight</a> <script async src="https://platform.twitter.com/widgets.js" charset="utf-8"></script>
+                                </div>
+                            </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+
+    </section>
 
 {% endblock content %}

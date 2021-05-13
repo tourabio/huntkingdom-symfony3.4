@@ -1,5 +1,92 @@
 {% extends 'front/layout.html.twig' %}
-{% block content %}
 
+{% block title %} Posts {% endblock title %}
+
+{% block content %}
+    <!--Breadcumb area start here-->
+    <section class="breadcumb-area jarallax bg-img af">
+        <div class="breadcumb">
+            <div class="container">
+                <div class="row">
+                    <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                        <div class="content">
+                            <h2>Posts</h2>
+                            <ul>
+                                <li><a href="{{ path('main_front') }}">Home</a></li>
+                                <li><a href="javascript:void(0)">Posts</a></li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+    <section class="blog-pages section">
+        <div class="container">
+            <div class="row">
+                <div class="blogs">
+                    <div class="content-post">
+                        <div class="content">
+                            <h4 class="sub-title">You can also <a href="{{ path('blog-single') }}">share</a> any complaints about our services</h4>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-sm-9 pd-0">
+                    {% for rec in recs %}
+                        <div class="col-sm-6">
+                            <div class="blog-list">
+                                <figure>
+                                    <div class="date">
+                                        <span>{{rec.user.username}}</span>
+                                    </div>
+                                </figure>
+                                <div class="content">
+                                    <h3> {{rec.title}}</h3>
+                                    <h4>{{rec.dateRec | date}}</h4>
+                                    {% if rec.descriptionRec | length > 45 %}
+                                        <p>{{rec.descriptionRec | slice(0,42)}} {{ '...' }}</p>
+                                    {% else %}
+                                        <p>{{rec.descriptionRec}} </p>
+                                    {% endif %}
+                                    <a href=" class="btn3">Read More <i class="fa fa-angle-double-right"></i></a><br>
+                                    <div class="listing-bottom clearfix">
+                                        <div class="btn-group">
+                                            {% if rec.user.id == app.user.id or is_granted('ROLE_ADMIN') %}
+                                                <a href="{{ path('rec_delete',{'id': rec.id}) }}"><button type="button" class="btn btn-sm btn-outline-danger">Delete</button></a>
+                                               {% endif %}
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                        </div>
+                    {% endfor %}
+                </div>
+                <div class="col-sm-3">
+                    <div class="sibebar">
+                        <div class="wighet search">
+                            <form>
+                                <label>
+                                    <input type="search" placeholder="Search here">
+                                </label>
+                                <button type="submit"><i class="fa fa-search"></i></button>
+                            </form>
+                        </div>
+                        <div class="wighet post">
+                            <h3>RECENT <span>NEWS</span></h3>
+                            <div class="post-list">
+                                <div class="thimb">
+                                    <a class="twitter-timeline" href="https://twitter.com/ath_amazight?ref_src=twsrc%5Etfw">Tweets by ath_amazight</a> <script async src="https://platform.twitter.com/widgets.js" charset="utf-8"></script>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        </div>
+
+    </section>
 
 {% endblock content %}

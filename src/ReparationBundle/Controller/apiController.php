@@ -61,7 +61,9 @@ class apiController extends Controller
             $piece_ready->setEtat(true);
             $em->persist($piece_ready);
         }
+
         $em->flush();
+
         $serializer = new Serializer([new ObjectNormalizer()]);
         $formatted = $serializer->normalize($pieces);
         return new JsonResponse($formatted);
@@ -245,5 +247,36 @@ class apiController extends Controller
         $formatted = $serializer->normalize("finished promotions deleted");
         return new JsonResponse($formatted);
     }
+    public function isExistAction(Request $request)
+    {
+        $em = $this->getDoctrine()->getManager();
+        $piece = new Piecesdefectueuses();
+        $piece->setNom($request->get('nom'));
+        $piece->setCategorie($request->get('categorie'));
+        $piece->setDescription($request->get('description'));
+        $piece->setImage($request->get('image'));
+        $s = $request->get('user');
+        $id = (int)$s;
+        $user = $this->getDoctrine()->getManager()
+            ->getRepository('UserBundle:User')
+            ->find($id);
+        $piece->setUser($user); //expected user got string instead !
+        $piece->setReserved(false);
+        $piece->setEtat(false);
+        $reponse="false";
+        
+        
+        $pieces = $this->getDoctrine()->getRepository('ReparationBundle:Piecesdefectueuses')->findAll();
+        foreach ($pieces as $p) {
+        if($p->isEtat()==$piece->isEtat() && $p->isReserved()==$piece->isReserved() && $p->getUser()==$piece->getUser() && $p->getCategorie()==$piece->getCategorie() && $p->getNom()==$piece->getNom()&& $p->getDescription()==$piece->getDescription())//manque limage!
+            $reponse="exists";
+        }
+        $em->flush();
+        $serializer = new Serializer([new ObjectNormalizer()]);
+        $formatted = $serializer->normalize($reponse);
+        return new JsonResponse($formatted);
+    }
+
+
 
 }

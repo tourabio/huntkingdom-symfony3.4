@@ -1,0 +1,140 @@
+
+{% extends 'dashboard/base.html.twig' %}
+{% block content %}
+<section id="main-content">
+    <section class="wrapper">
+        <div class="row">
+            <div class="col-lg-12">
+                <section class="panel">
+                    <header class="panel-heading">
+                        CREATE FORM
+                    </header>
+                    <div class="panel-body">
+                        <div class="form-horizontal " method="get">
+                        <div class="form-group">
+                            <div class="col-sm-10">
+                                {{ form_start(form,{'attr': {'novalidate': 'novalidate','id':'formanimals'} }) }}
+
+
+                                <div class="form-group">
+                                    <label for="cname" class="control-label col-lg-2">Categorie <span class="required">*</span></label>
+                                    <div class="col-lg-10">
+                                        {{ form_widget(form.categorie,{'attr':{'type':'text','class':'form-control'}}) }}
+                                    </div>
+                                </div>
+                                <div class="form-group ">
+                                    <label for="cname" class="control-label col-lg-2">Nom <span class="required">*</span></label>
+                                    <div class="col-lg-10">
+                                        {{ form_widget(form.nom,{'attr':{'type':'text','class':'form-control'},'id':'nom'}) }}
+                                    </div>
+                                    <div class="alert alert-danger" id="errorNom" hidden>
+                                       choose name
+                                    </div>
+                                </div>
+                                <div class="form-group ">
+                                    <label for="cname" class="control-label col-lg-2">Description <span class="required">*</span></label>
+                                    <div class="col-lg-10">
+                                        {{ form_widget(form.description,{'attr':{'type':'text','class':'form-control'},'id':'description'}) }}
+                                    </div>
+                                    <div class="alert alert-danger" id="errorDesc" hidden>
+                                        Choose image
+                                    </div>
+                                </div>
+                                <div class="form-group ">
+                                    <label for="inputError" class="control-label col-lg-2">image <span class="required">*</span></label>
+                                    <div class="col-lg-10">
+                                        {{ form_widget(form.image_animal,{'attr':{'class':'form-control'},'id':'image'}) }}
+                                    </div>
+                                    <div class="alert alert-danger" id="errorImage" hidden>
+                                        Choose image
+                                    </div>
+                                </div>
+                                <div class="form-group ">
+                                    <label for="cname" class="control-label col-lg-2">Saison <span class="required">*</span></label>
+                                    <div class="col-lg-10">
+                                        {{ form_widget(form.debutSaison,{'attr':{'type':'text','class':'form-control'}}) }}
+                                    </div>
+                                </div>
+                                <div class="form-group ">
+                                    <label for="cname" class="control-label col-lg-2">Saison <span class="required">*</span></label>
+                                    <div class="col-lg-10">
+                                        {{ form_widget(form.finSaison,{'attr':{'type':'text','class':'form-control'}}) }}
+                                    </div>
+                                </div>
+
+                                <div class="form-group">
+                                    <div class="col-lg-offset-2 col-lg-10">
+                                        {{ form_widget(form.Submit, {'attr': {'class': 'btn btn-primary'}})}}
+                                    </div>
+                                </div>
+                                    {{ form_end(form) }}
+
+                            </div>
+                        </div>
+                        </div>
+                    </div>
+                </section>
+            </div>
+        </div>
+    </section>
+</section>
+
+{% endblock content %}
+
+{% block js %}
+    <script type="text/javascript">
+        $("#formanimals").submit(function(e){
+
+            /****  NOM *****/
+            if ( $("#nom").val()==""){
+                $("#errorNom").show();
+                e.preventDefault();
+
+            }
+            else if (!$("#nom").val().match(/^[a-z]+$/i))
+            {
+                $("#errorNom").show().text("field must be alphabetic");
+                e.preventDefault();
+            }
+            else
+            {
+                $("#errorNom").hide();
+            }
+
+
+            /****  description *****/
+
+            if ( $("#description").val()==""){
+                $("#errorDesc").show().text("Choose Description ");
+                e.preventDefault();
+
+            }
+            else if (!$("#description").val().match(/^[a-z]|[0-9]+$/i))
+            {
+                $("#errorDesc").show().text("field does not contain symbols");
+                e.preventDefault();
+            }
+            else
+            {
+                $("#errorDesc").hide();
+            }
+
+
+            /****  IMAGE *****/
+
+            if ( $("#image").val()==""){
+                $("#errorImage").show();
+                e.preventDefault();
+            }
+            else
+            {
+                $("#errorImage").hide();
+            }
+
+
+        });
+
+
+    </script>
+{% endblock %}
+

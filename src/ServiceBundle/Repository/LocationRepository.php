@@ -10,4 +10,14 @@ namespace ServiceBundle\Repository;
  */
 class LocationRepository extends \Doctrine\ORM\EntityRepository
 {
+    public function findLocations($id){
+        return $this->getEntityManager()
+            ->createQuery(
+                'SELECT l
+                FROM ServiceBundle:Location l
+                WHERE l.MoyenDeTransport =:id AND (l.dateArrivee + l.nbJours)> CURRENT_DATE() ORDER BY l.dateArrivee'
+            )
+            ->setParameter('id', $id)
+            ->getResult();
+    }
 }

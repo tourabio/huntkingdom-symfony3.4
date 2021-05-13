@@ -1,1 +1,186 @@
 {% extends 'dashboard/base.html.twig' %}
+
+
+
+{% block content %}
+<script></script>
+
+
+          {#  <div class="sidebar-search">
+
+                <div class="input-group custom-search-form">
+
+                    <input type="text" id="search" class="form-control" placeholder="Search here">
+                </div>
+                <!-- /input-group -->
+            </div>
+            <ul class="nav" id="side-menu">
+                <li>
+                    <a href="#"> Entities<span class="fa arrow"></span></a>
+                    <ul class="nav nav-second-level" id="entitiesNav">
+                    </ul>
+                </li>
+            </ul><br><br><br><br>
+
+            <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
+
+            <script type="text/javascript">
+                jQuery(document).ready(function() {
+                    var searchRequest = null;
+                    $("#search").keyup(function() {
+                        var minlength = 1;
+                        var that = this;
+                        var value = $(this).val();
+                        var entitySelector = $("#entitiesNav").html('');
+                        if (value.length >= minlength ) {
+                            if (searchRequest != null)
+                                searchRequest.abort();
+                            searchRequest = $.ajax({
+                                type: "GET",
+                                url: "{{ path('ajax_search') }}",
+                                data: {
+                                    'q' : value
+                                },
+                                dataType: "text",
+                                success: function(msg){
+                                    //we need to check if the value is the same
+                                    if (value===$(that).val()) {
+                                        var result = JSON.parse(msg);
+                                        $.each(result, function(key, arr) {
+                                            $.each(arr, function(id, value) {
+                                                if (key === 'posts') {
+                                                    if (id !== 'error') {
+                                                        console.log(value[1]);
+                                                        entitySelector.append('<li><b>'+value[1]+'</b><a href="/detailedpost/'+id+'">'+'<img src="/uploads/post/'+value[0]+'" style="width: 50px; height: 50px"/>'+'</a></li>');
+                                                    } else {
+                                                        entitySelector.append('<li class="errorLi">'+value+'</li>');
+                                                    }
+                                                }
+                                            });
+                                        });
+                                    }
+                                }
+                            });
+                        }
+                    });
+                });
+            </script> #}
+
+
+
+
+    <section id="main-content">
+        <section class="wrapper">
+
+            <!-- page start-->
+            <div class="content-center">
+
+
+
+                <div class="container">
+                    <div class="row">
+                        <div class="col-2 text-center">
+                            <div class="heading">
+                                <h1 class="section-title">Latest Posts</h1>
+                                <h4 class="sub-title">You can also <a href="{{ path('pub_add') }}">share</a> your own experience, thoughts, questions...</h4>
+                            </div>
+                        </div>
+                        <script src="{{ asset('sorttable.js') }}"></script>
+                        <table class="sortable" >
+                            <tbody id="myTable">
+                            <tr>
+                                <th><i class=\"icon_profile\"></i> ID</th><th><i class=\"icon_profile\"></i> Title</th><th><i class=\"icon_calendar\"></i> Description</th><th><i class=\"icon_calendar\"></i> Views</th></tr>"
+                            </tr>
+
+                            </tbody>
+                        </table>
+
+                        <div >
+                        {% for post in posts %}
+
+                            <div class="col-xs-6 col-sm-6 col-md-6 col-lg-4">
+                                <div class="featured-box">
+                                    <figure>
+                                        <div class="homes-tag featured">Forum</div>
+                                        <div class="homes-tag rent"><i></i>{{ post.views }}</div>
+
+                                        <a href="{{ path('pub_detailedDash',{'id': post.id}) }}"><img class="img-fluid" src="{{ asset('java/huntkingdom/src/Uploads/' ~ post.image) }}" alt="{{ post.title }}" width="400px" height="400px"></a>
+                                    </figure>
+                                    <div class="content-wrapper">
+                                        <div class="feature-content">
+                                            <h4><a href="{{ path('pub_detailedDash',{'id': post.id}) }}">{% if post.pinned == true %}Important {% endif %}{% if post.closed == true %} Closed: {% endif %}{{ post.title }}</a></h4>
+                                            {% if post.description | length > 45 %}
+                                                <p>{{post.description | slice(0,42)}} {{ '...' }}</p>
+                                            {% else %}
+                                                <p>{{post.description}} </p>
+                                            {% endif %}
+                                                       <div class="meta-tag">
+                                                <div class="listing-review">
+                                                    <span class="review-avg">4.5</span>
+                                                    2 Ratings
+                                                </div>
+                                                <div class="user-name">
+                                                    <a href="#"><i class="lni-user"></i>{{ post.user.username }}</a>
+                                                </div>
+                                                <div class="listing-category">
+                                                    <a href="#"><i class="lni-alarm-clock"></i>{{ post.publishedAt|date()  }} </a>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="listing-bottom clearfix">
+                                            <div class="btn-group">
+
+                                                <a href="{{ path('pub_update',{'id': post.id}) }}"><button type="button" class="btn btn-sm btn-outline-info">Update</button></a>
+                                                <a href="{{ path('pub_delete',{'id': post.id}) }}"><button type="button" class="btn btn-sm btn-outline-danger">Delete</button></a>
+                      {% if post.closed == false %}                           <a href="{{ path('closeDash_pub',{'id': post.id}) }}"><button type="button" class="btn btn-sm btn-outline-primary">Close</button></a>
+                      {% endif %}
+                                                {% if post.pinned == false %}                           <a href="{{ path('pin_pub',{'id': post.id}) }}"><button type="button" class="btn btn-sm btn-outline-primary">Pin</button></a>
+                                                {% endif %}
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        {% endfor %}
+</div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+
+
+</section>
+
+    <script src="{{ asset('dashboard/js/jquery-1.8.3.min.js') }}"></script>
+{% endblock %}
+
+{% block js %}
+    <script>
+        $(document).ready(function () {
+
+
+            $('#recherche').keyup(function () {
+                $.ajax({
+                    url:"{{ path('rechercher') }}",
+                    type:'GET',
+                    dataType: 'JSON',
+                    data:{'title':$(this).val() },
+                    async: true,
+
+                    success:function (data) {
+                        $('#myTable').html("");
+                        for(var i=0;i<data.length;i++){
+                            $('#myTable').append("<tr> <td>"+data[i].id+" </td> <td>"+data[i].title+" </td>  <td>"+data[i].description+" </td> <td>"+data[i].views+" </td> </tr> ");
+                        }
+
+                    },
+                    error: function (xhr, textStatus,errorThrown) {
+                        alert("error");
+                    }
+                })
+            });
+        });
+    </script>
+
+{% endblock %}

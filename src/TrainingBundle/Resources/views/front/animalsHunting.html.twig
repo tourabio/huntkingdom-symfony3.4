@@ -1,0 +1,122 @@
+{% extends 'front/layout.html.twig' %}
+
+{% block content %}
+    <section class="breadcumb-area jarallax bg-img af">
+        <div class="breadcumb">
+            <div class="container">
+                <div class="row">
+                    <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                        <div class="content">
+                            <h2>Our Animals</h2>
+
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+
+    <section class="blog-pages section">
+        <div class="container">
+            <div class="row">
+                <div class="col-sm-3">
+                    <div class="sibebar">
+                <div class="wighet filter">
+                    <h3>Filter by  <span>Month</span></h3>
+                    <div class="price-range">
+                        <div class="range">
+                            <div id="range-price" class="range-box"></div>
+                            <span>Form :</span>
+                            <input type="text" id="price" class="price-box" readonly/>
+
+                        </div>
+                        <button class="btn1" id="filter">FILTER</button>
+                    </div>
+                </div>
+                    </div>
+                </div>
+                <div id="add">
+                <div id="blog">
+                    {% for animal in animals %}
+                    <div class="col-lg-4 cl-md-6"  >
+                        <div class="blog-list"  >
+                            <figure>
+                                <img src="{{ asset('java/huntkingdom/src/Uploads/'~animal.getImageAnimal()) }}" id="img" >
+                            </figure>
+
+                            <div class="content">
+                                <h3 id="nom">{{ animal.nom }}  from {{ animal.debutSaison }} to {{ animal.finSaison }}</h3>
+                                <p id="description">{{ animal.description }}.</p>
+                                <a href="#" class="btn3">Read More <i class="fa fa-angle-double-right"></i></a>
+                            </div>
+                        </div>
+                    </div>
+            {% endfor %}
+                </div>
+                </div>
+
+
+                </div>
+            </div>
+    </section>
+{% endblock content %}
+{% block js %}
+    /*----------------------------
+    7. range-slider active
+    ------------------------------ */
+    <script>
+    $( "#range-price" ).slider({
+    range: true,
+    min: 1,
+    max: 12,
+    values: [ 1, 12 ],
+    slide: function( event, ui ) {
+    $( "#price" ).val("$" + ui.values[ 0 ] + " - " +  " $" + ui.values[ 1 ]  );
+    }
+    });
+
+    $( "#price" ).val( "$" + $( "#range-price" ).slider( "values", 0 ) +
+    " - " + " $" + $( "#range-price" ).slider( "values", 1 ));
+
+
+
+    $( "#filter" ).click(function () {
+        var searchRequest = null;
+       $start =  $( "#range-price" ).slider( "values", 0 );
+         $end =    $( "#range-price" ).slider( "values",1  ) ;
+        $('#blog').remove();
+
+        if (searchRequest != null)
+            searchRequest.abort();
+        searchRequest = $.ajax({
+            url: 'http://localhost/HuntKingdom/web/app_dev.php/training/list_animals_hunting_front/' + $start+'/'+$end ,
+            success: function(msg){
+
+                //we need to check if the value is the same
+
+                    var result = JSON.parse(msg);
+                    console.log(result);
+                $('#blog').remove();
+                    $.each(result, function(key, arr) {
+                        $.each(arr, function(id, value) {
+                            if (id != 'error') {
+                                entitySelector = $("#add");
+                                entitySelector.append('<div id="blog"><div class="col-lg-4 cl-md-6"><div class="blog-list"><figure><img src="{{ asset('java/huntkingdom/src/Uploads/') }}'+ value.image_animal+'"/> <div class="content"><h3 id="nom">'+  value.nom +' from '+  value.debutSaison+' to ' + value.finSaison+'</h3><p id="description">'+value.description+'</p>');
+                            } else { console.log(value);
+                             }
+
+                            });
+
+                        });
+
+                    }
+
+                            });
+            });
+
+
+    </script>
+
+
+{% endblock %}

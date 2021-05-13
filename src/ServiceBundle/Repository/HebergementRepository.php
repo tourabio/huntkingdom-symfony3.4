@@ -10,4 +10,18 @@ namespace ServiceBundle\Repository;
  */
 class HebergementRepository extends \Doctrine\ORM\EntityRepository
 {
+    public function createFindAllQuery()
+    {
+        return $this->_em->getRepository('ServiceBundle:Hebergement')->createQueryBuilder('bp');
+    }
+    public function findEntitiesByString($str){
+        return $this->getEntityManager()
+            ->createQuery(
+                'SELECT l
+                FROM ServiceBundle:Hebergement l
+                WHERE l.adresse LIKE :str'
+            )
+            ->setParameter('str', '%'.$str.'%')
+            ->getResult();
+    }
 }

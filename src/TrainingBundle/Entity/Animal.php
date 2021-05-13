@@ -3,6 +3,9 @@
 namespace TrainingBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Serializer\Annotation\Groups;
+use Symfony\Component\Validator\Constraints as Assert;
+
 
 /**
  * Animal
@@ -23,11 +26,53 @@ class Animal
 
 
     /**
-     * @var string
+     * @var int
      *
-     * @ORM\Column(name="saison", type="string", length=255)
+     * @ORM\Column(name="debutSaison", type="integer")
      */
-    private $saison;
+    private $debutSaison;
+
+
+    /**
+     * @var int
+     *
+     * @ORM\Column(name="finSaison", type="integer")
+     */
+    private $finSaison;
+
+    /**
+     * @return int
+     */
+    public function getDebutSaison()
+    {
+        return $this->debutSaison;
+    }
+
+    /**
+     * @param int $debutSaison
+     */
+    public function setDebutSaison($debutSaison)
+    {
+        $this->debutSaison = $debutSaison;
+    }
+
+    /**
+     * @return int
+     */
+    public function getFinSaison()
+    {
+        return $this->finSaison;
+    }
+
+    /**
+     * @param int $finSaison
+     */
+    public function setFinSaison($finSaison)
+    {
+        $this->finSaison = $finSaison;
+    }
+
+
 
     /**
      * @var string
@@ -40,6 +85,7 @@ class Animal
      * @var string
      *
      * @ORM\Column(name="nom", type="string", length=255)
+     * @Assert\NotBlank(message="lieu ne doit pas etre vide")
      */
     private $nom;
 
@@ -49,6 +95,15 @@ class Animal
      * @ORM\Column(name="description", type="text")
      */
     private $description;
+
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="image_animal", type="string", length=255)
+     */
+    private $image_animal;
+
+
 
 
     /**
@@ -61,29 +116,6 @@ class Animal
         return $this->id;
     }
 
-    /**
-     * Set saison
-     *
-     * @param string $saison
-     *
-     * @return Animal
-     */
-    public function setSaison($saison)
-    {
-        $this->saison = $saison;
-
-        return $this;
-    }
-
-    /**
-     * Get saison
-     *
-     * @return string
-     */
-    public function getSaison()
-    {
-        return $this->saison;
-    }
 
     /**
      * Set categorie
@@ -156,5 +188,27 @@ class Animal
     {
         return $this->description;
     }
-}
 
+    /**
+     * @return string
+     */
+    public function getImageAnimal()
+    {
+        return $this->image_animal;
+    }
+
+    /**
+     * @param string $image_animal
+     */
+    public function setImageAnimal($image_animal)
+    {
+        $this->image_animal = $image_animal;
+    }
+
+
+
+
+
+
+
+}

@@ -1,0 +1,98 @@
+
+
+
+
+
+
+
+
+{% extends 'front/layout.html.twig' %}
+
+{% block content %}
+
+    {#<li><a href="{{ path('readp') }}"> View Cart</a></li>#}
+    <section class="breadcumb-area jarallax bg-img af">
+        <div class="breadcumb">
+            <div class="container">
+                <div class="row">
+                    <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                        <div class="content">
+                            <h2>Our products</h2>
+                            <ul>
+                                <li><a href="#">Home</a></li>
+                                <li><a href="javascript:void(0)">shop</a></li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+    <!--Breadcumb area end here-->
+    <!--Products area start here-->
+    <section class="shop-page section">
+        <div class="container">
+            <div class="row">
+                <div class="col-sm-3">
+                    <div class="sibebar">
+                        <div class="wighet search">
+                            <form>
+                                <input type="search" placeholder="Search here">
+                                <button type="submit"><i class="fa fa-search"></i></button>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-sm-9 pd-0">
+                    <div class="col-sm-12">
+                        <div class="filter-area">
+                            <div class="list-grid">
+                                <ul class="list-inline">
+                                    <li><a href="#" id="gridview"><i class="fa fa-th"></i></a></li>
+                                    <li><a href="#" id="listview"><i class="fa fa-list"></i></a></li>
+                                </ul>
+                            </div>
+                            <div class="showpro">
+                                <p><span>Showing 1-9</span> of 256 Results</p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="col-sm-12 pd-0">
+                                <div class="contents">
+
+
+                                    <center>
+                                        <h1>Add Panier </h1>
+                                        {{ form_start(form) }}
+                                        <table>
+                                            <tr><td>Total</td><td>{{ form_widget(form.prixTotal) }}</td></tr>
+                                            <tr><td>Article Number</td><td>{{ form_widget(form.nbArticles) }}</td></tr>
+                                            <tr><td>Shop Id</td><td>{{ form_widget(form.shopid) }}</td></tr>
+                                        </table>
+                                        {{ form_end(form) }}
+
+                                    </center>
+
+                                </div>
+                            </div>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+    </section>
+{% endblock %}
+
+
+
+
+
+
+
+
+
+
+
+
+

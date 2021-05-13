@@ -16,10 +16,12 @@ class DefaultController extends Controller
     {
         return $this->render('@Reparation/dashboard/add_defective.html.twig');
     }
+
     public function promotionAction()
     {
         return $this->render('@Reparation/dashboard/promotion.html.twig');
     }
+
     public function add_defectiveAction(Request $request)
     {
         $piece = new Piecesdefectueuses();
@@ -31,7 +33,7 @@ class DefaultController extends Controller
             $piece->setUser($user);
             $piece->setReserved(false);
             $file = $piece->getImage();
-            $fileName = md5(uniqid()).'.'.$file->guessExtension();
+            $fileName = md5(uniqid()) . '.' . $file->guessExtension();
             $file->move($this->getParameter('photos_directory'), $fileName);
             $piece->setImage($fileName);
             $em->persist($piece);
@@ -47,7 +49,6 @@ class DefaultController extends Controller
         ]);
 
 
-
     }
 
     public function list_defectiveAction()
@@ -58,7 +59,7 @@ class DefaultController extends Controller
         ]);
     }
 
-    public function repareAction($idP,$idR,Request $request)
+    public function repareAction($idP, $idR, Request $request)
     {
 
         $reparation = new Reparation();
@@ -67,10 +68,12 @@ class DefaultController extends Controller
         $repairer = $this->getDoctrine()->getRepository('UserBundle:User')->find($idR);
         $form->handleRequest($request);
         if ($form->isSubmitted() && $form->isValid()) {
+            $date = new \DateTime();
             $em = $this->getDoctrine()->getManager();
             $piece->setReserved(true);
             $reparation->setPiecedefectueuse($piece);
             $reparation->setReparateur($repairer);
+            $reparation->setDateDebut($date);
             $em->persist($reparation);
             $em->flush();
             return $this->redirectToRoute('reparation_front_list_defective');
@@ -80,12 +83,116 @@ class DefaultController extends Controller
 
         return $this->render('@Reparation/front/repaire.html.twig', [
             'form' => $form->createView(),
-            'idP'=>$idP,
-            'idR'=>$idR
+            'idP' => $idP,
+            'idR' => $idR
         ]);
     }
+
     public function frontpromotionAction()
     {
         return $this->render('@Reparation/front/promotion.html.twig');
+    }
+
+
+    public function list_you_defectiveAction($idUser)
+    {
+
+
+        $pieces = $this->getDoctrine()->getRepository('ReparationBundle:Piecesdefectueuses')->find_my_Defective($idUser);
+        $date = new \DateTime();
+        $reparations_ready =  $this->getDoctrine()->getRepository('ReparationBundle:Reparation')->find_my_ready($idUser,$date);
+        $em = $this->getDoctrine()->getManager();
+        foreach ($reparations_ready as $reparation_ready){
+            $piece_ready = $reparation_ready->getPiecedefectueuse();
+            $piece_ready->setEtat(true);
+            $em->persist($piece_ready);
+        }
+        $em->flush();
+        return $this->render('@Reparation/front/list_my_defective.html.twig', [
+            'pieces' => $pieces,
+        ]);
+    }
+
+    public function show_progressAction($idP)
+    {
+        $reparation = $this->getDoctrine()->getRepository('ReparationBundle:Reparation')->find_my_reparation($idP);
+        $piece = $this->getDoctrine()->getRepository('ReparationBundle:Piecesdefectueuses')->find($idP);
+
+        $current_date = new \DateTime();
+        $date_fin = $reparation->getDateFin();
+        $date_deb = $reparation->getDateDebut();
+        $diffTotale = strtotime($date_fin->format('Y-m-d H:i:s')) - strtotime($date_deb->format('Y-m-d H:i:s'));
+        $diffDays = strtotime("now") - strtotime($date_deb->format('Y-m-d H:i:s'));
+        //difference between two dates
+        $diff = date_diff($date_deb,$current_date);
+        $tooLate = true;
+        //count days
+        $numberDays = (int)$diff->format("%a");
+        if($numberDays<4){
+            $tooLate = false;
+        }
+
+
+
+        $taux = ((double) 100 - ($diffDays * 100 / $diffTotale));
+
+
+        $timediff = $current_date->diff($date_fin);
+        $years = $timediff->y;
+        $months = $timediff->m;
+        $days = $timediff->d;
+        $seconds = $timediff->s;
+        $minutes = $timediff->i;
+        $hours = $timediff->h;
+        $tauxFinale = ceil(number_format((float)100-$taux, 2, '.', ''));
+
+        return $this->render('@Reparation/front/show_progress.html.twig', [
+            'reparation' => $reparation,
+            'piece' => $piece,
+            'years' => $years,
+            'months' => $months,
+            'days' => $days,
+            'seconds' => $seconds,
+            'minutes' => $minutes,
+            'hours' => $hours,
+            'taux' => $tauxFinale,
+            'tooLate'=>$tooLate
+        ]);
+    }
+    public function show_readyAction($idP)
+    {
+        $reparation = $this->getDoctrine()->getRepository('ReparationBundle:Reparation')->find_my_reparation($idP);
+        $piece = $this->getDoctrine()->getRepository('ReparationBundle:Piecesdefectueuses')->find($idP);
+
+        return $this->render('@Reparation/front/show_ready.html.twig', [
+            'reparation' => $reparation,
+            'piece' => $piece,
+        ]);
+    }
+
+    public function show_repairer_profileAction($idR)
+    {
+        $user = $this->getDoctrine()->getRepository('UserBundle:User')->find($idR);
+        return $this->render('@Reparation/front/show_repairer_profile.html.twig', [
+            'user' => $user,
+        ]);
+    }
+
+
+    public function finish_reparationAction($idR,$idP)
+    {
+        $piece = $this->getDoctrine()->getRepository('ReparationBundle:Piecesdefectueuses')->find($idP);
+        $reparation = $this->getDoctrine()->getRepository('ReparationBundle:Reparation')->find($idR);
+        if ($reparation) {
+            $reparation->setPiecedefectueuse(null);
+        }
+        $em = $this->getDoctrine()->getManager();
+        $em->remove($piece);
+        $em->remove($reparation);
+        $em->flush();
+        $id = $this->getUser()->getId();
+        return $this->redirectToRoute('reparation_front_list_your_defective',[
+            'idUser' => $id
+        ]);
     }
 }

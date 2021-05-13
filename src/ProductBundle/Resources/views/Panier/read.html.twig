@@ -1,0 +1,149 @@
+{% extends 'front/layout.html.twig' %}
+
+{% block content %}
+{#<center>#}
+    {#<li><a href="{{ path('readp') }}"> View Cart</a></li>#}
+    <section class="breadcumb-area jarallax bg-img af">
+        <div class="breadcumb">
+            <div class="container">
+                <div class="row">
+                    <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                        <div class="content">
+                            <h2>Our Cart</h2>
+                            <ul>
+                                <li><a href="#">Home</a></li>
+                                <li><a href="javascript:void(0)"> Cart </a></li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+
+    <div class="cart-table-area section-padding-100">
+        <div class="container-fluid">
+            <div class="row">
+                <div class="col-12 col-lg-8">
+                    <div class="cart-title mt-50">
+                        <h2>Shopping Cart</h2>
+                    </div>
+                    <div class="cart-table clearfix"  >
+                        <table class="table table-responsive">
+                            <thead>
+                            <tr>
+                                <th></th>
+                        <th> lib_prod   </th>
+                        <th> prix   </th>
+                        <th> qtt   </th>
+                        <th> Action   </th>
+
+                            </tr>
+                            </thead>
+                            <tbody>
+                    {% for produit in panier  %}
+                            <tr class="itemtt">
+                                <td class="cart_product_img">
+                                    <a href="#"><img src="{{ asset('java/huntkingdom/src/Uploads/' ~ produit.image) }}" alt="Product"></a>
+                                </td>
+                                <td class="cart_product_desc">
+                                    <h5>{{ produit.libProd }}</h5>
+                                </td>
+                                <td>
+                                    <input value="{{ produit.prix }}" class="prix" hidden/>
+                                    <input value="{{ produit.qteProd }}" class="qte_prod" hidden/>
+                                    <span >${{ produit.prix }}</span>
+                                </td>
+                                <td class="qty">
+                                    <div class="qty-btn d-flex">
+                                        <p>Qty</p>
+                                        <div class="quantity">
+                                            <input type="number" class="qty-text"  step="1" min="1" max="300" name="quantity" value="1">
+                                        </div>
+
+                                    </div>
+
+                                </td>
+                                 <td>
+                                  <td class="cart_product_desc">
+                                <a href="{{ path('deletep', { 'id': produit.id }) }}"> Remove   <i class="fas fa-trash-alt"></i></a>
+                                  </td>
+                            </tr>
+                            {% endfor %}
+                            </tbody>
+                        </table>
+                                {% if panier %}
+                     <center>   <button  id="sub" class="btn2" >Checkout</button> </center>
+                                {% endif %}
+                    </div>
+                </div>
+                <br>
+                <br>
+                <br>
+                <br>
+                <br><br><br><br><br><br>
+                <div class="col-12 col-lg-4 alert alert-danger" role="alert" id="err" hidden>
+
+                    invalid quantity!
+                </div>
+                <div class="col-12 col-lg-4" id="commande" hidden>
+                    <div class="cart-summary">
+                        <h5>Cart Total</h5>
+                        <ul class="summary-table">
+                            <li><span>delivery:</span> <span>Free</span></li>
+                            <li><span>total:</span> <span class="total"></span></li>
+                        </ul>
+                        <br>
+                       <a href="{{ path('confirm') }}">     <button  id="sub" class="btn4"  style="background: #0d8013;!important;" >Confirm</button> </a>
+                    </div>
+                </div>
+
+            </div>
+                </div>
+    </div>
+
+{% endblock %}
+{% block js %}
+    <script>
+
+        $("#sub").click(function() {
+            $prixTotale = 0;
+            b = true;
+            $("tr.itemtt").each(function () {
+                var quantity = $(this).find("input.qty-text").val();
+                var prix = $(this).find("input.prix").val();
+                var qtt = $(this).find("input.qte_prod").val();
+                if (quantity > qtt || quantity <= 0 ) {
+                    $("#err").show();
+                    b = false;
+                    return false;
+
+                } else {
+                    $("#err").hide();
+
+
+                    $prixTotale += prix * quantity;
+
+
+                }
+            });
+                    if(b){
+                    $.ajax({
+                        url: 'chekout/' + $prixTotale,
+                        success: function (data) {
+                            $(".total").html('$' + data);
+                            $("#commande").show();
+                            $("#sub").hide();
+
+
+                        },
+                        error: function (xhr, textStatus, errorThrown) {
+                            alert('Ajax request failed.');
+                        }
+                    });
+
+                    }
+        });
+    </script>
+{% endblock %}

@@ -28,11 +28,7 @@ class Produit
      */
     private $promotion;
 
-    /**
-     * @ORM\ManyToOne(targetEntity="Marque")
-     * @ORM\JoinColumn(name="marqueId", referencedColumnName="id")
-     */
-    private $marque;
+
 
     /**
      * @return \Doctrine\Common\Collections\ArrayCollection
@@ -66,21 +62,8 @@ class Produit
         $this->promotion = $promotion;
     }
 
-    /**
-     * @return mixed
-     */
-    public function getMarque()
-    {
-        return $this->marque;
-    }
 
-    /**
-     * @param mixed $marque
-     */
-    public function setMarque($marque)
-    {
-        $this->marque = $marque;
-    }
+
     /**
      * @var int
      *
@@ -103,6 +86,29 @@ class Produit
      * @ORM\Column(name="prix", type="float")
      */
     private $prix;
+
+    /**
+     * @var float
+     *
+     * @ORM\Column(name="prixFinale", type="float")
+     */
+    private $prixFinale;
+
+    /**
+     * @return float
+     */
+    public function getPrixFinale()
+    {
+        return $this->prixFinale;
+    }
+
+    /**
+     * @param float $prixFinale
+     */
+    public function setPrixFinale($prixFinale)
+    {
+        $this->prixFinale = $prixFinale;
+    }
 
     /**
      * @var string
@@ -139,6 +145,28 @@ class Produit
      */
     private $type;
 
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="marque", type="string", length=255)
+     */
+    private $marque;
+
+    /**
+     * @return string
+     */
+    public function getMarque()
+    {
+        return $this->marque;
+    }
+
+    /**
+     * @param string $marque
+     */
+    public function setMarque($marque)
+    {
+        $this->marque = $marque;
+    }
 
     /**
      * Get id

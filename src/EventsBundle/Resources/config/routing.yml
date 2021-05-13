@@ -1,15 +1,55 @@
+events_homepage:
+    path:     /
+    defaults: { _controller: EventsBundle:Default:index }
+
 list_competition:
-    path:     /competition
-    defaults: { _controller: EventsBundle:Default:competition }
+    path:     /list_competition
+    defaults: { _controller: EventsBundle:Event:affichercompetition }
+
+ajout_competition:
+    path:     /ajoutcompetition
+    defaults: { _controller: EventsBundle:Event:competitionajout }
+
+modifier_competition:
+    path:     /modifiercompetition/{id}
+    defaults: { _controller: EventsBundle:Event:modifiercompetition }
+
+supprimer_competition:
+    path:     /supprimercompetition/{id}
+    defaults: { _controller: EventsBundle:Event:supprimercompetition }
+
 list_publicity:
     path:     /publicity
-    defaults: { _controller: EventsBundle:Default:publicity }
+    defaults: { _controller: EventsBundle:Event:afficherpublicite }
+
+recherche_publicity:
+    path:     /recherchepublicity
+    defaults: { _controller: EventsBundle:Event:recherchepublicity}
+
+ajout_publicity:
+    path:     /ajoutpublicity
+    defaults: { _controller: EventsBundle:Event:publicityajout }
+
+
+supprimer_publicity:
+    path:     /supprimerpublicity/{id}
+    defaults: { _controller: EventsBundle:Event:supprimerpublicity }
+modifier_publicity:
+    path:     /modifierpublicity/{id}
+    defaults: { _controller: EventsBundle:Event:modifierpublicity }
+
+competition_export:
+    path:     /export
+    defaults: { _controller: EventsBundle:Event:export }
 
 
 list_event:
     path:     /list-event
-    defaults: { _controller: EventsBundle:Default:frontevent }
+    defaults: { _controller: EventsBundle:Event:listcompetition }
 event-single:
     path:     /event-single
-    defaults: { _controller: EventsBundle:Default:fronteventsingle }
+    defaults: { _controller: EventsBundle:Event:listPublicites }
 
+event_many:
+    path:     /many/{id}
+    defaults: { _controller: EventsBundle:Event:addtocompetition }

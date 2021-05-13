@@ -14,14 +14,17 @@ class Panier
 {
     /**
      * Many Groups have Many Users.
-     * @ORM\ManyToMany(targetEntity="Produit", mappedBy="paniers")
+     * @ORM\ManyToMany(targetEntity="Produit", mappedBy="paniers",cascade={"persist"})
      */
     private $produits;
 
     public function __construct() {
         $this->produits = new \Doctrine\Common\Collections\ArrayCollection();
     }
+    public function addToPanier($produit) {
+        $this->produits[] = $produit;
 
+    }
     /**
      * @var int
      *
@@ -31,12 +34,6 @@ class Panier
      */
     private $id;
 
-    /**
-     * @var \DateTime
-     *
-     * @ORM\Column(name="datePanier", type="date")
-     */
-    private $datePanier;
 
     /**
      * @var float
@@ -51,6 +48,8 @@ class Panier
      * @ORM\Column(name="nbArticles", type="integer")
      */
     private $nbArticles;
+
+
 
     /**
      * @return float
@@ -87,26 +86,6 @@ class Panier
     /**
      * @return string
      */
-    public function getEtat()
-    {
-        return $this->etat;
-    }
-
-    /**
-     * @param string $etat
-     */
-    public function setEtat($etat)
-    {
-        $this->etat = $etat;
-    }
-
-    /**
-     * @var string
-     *
-     * @ORM\Column(name="etat", type="string")
-     */
-    private $etat;
-
 
     /**
      * Get id
@@ -119,27 +98,45 @@ class Panier
     }
 
     /**
-     * Set datePanier
-     *
-     * @param \DateTime $datePanier
-     *
-     * @return Panier
+     * @return mixed
      */
-    public function setDatePanier($datePanier)
+    public function getProduits()
     {
-        $this->datePanier = $datePanier;
-
-        return $this;
+        return $this->produits;
     }
 
     /**
-     * Get datePanier
+     * @param mixed $produits
+     */
+    public function setProduits($produits)
+    {
+        $this->produits = $produits;
+    }
+
+    /**
+     * @var \DateTime
      *
+     * @ORM\Column(name="datePanier", type="datetime")
+     */
+    private $datePanier;
+
+    /**
      * @return \DateTime
      */
     public function getDatePanier()
     {
         return $this->datePanier;
     }
-}
 
+    /**
+     * @param \DateTime $datePanier
+     */
+    public function setDatePanier($datePanier)
+    {
+        $this->datePanier = $datePanier;
+    }
+
+
+
+
+}

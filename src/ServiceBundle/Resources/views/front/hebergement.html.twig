@@ -1,5 +1,66 @@
 {% extends 'front/layout.html.twig' %}
 {% block content %}
+    <!--Breadcumb area start here-->
+    <section class="breadcumb-area jarallax bg-img af">
+        <div class="breadcumb">
+            <div class="container">
+                <div class="row">
+                    <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                        <div class="content">
+                            <h2>Our Accommodations</h2>
+                            <ul>
+                                <li><a href="{{ path('main_front') }}">Home</a></li>
+                                <li><a href="javascript:void(0)">Accomodation</a></li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+    <section class="blog-pages section">
+        <div class="container">
+            <div class="row">
+                <div class="col-sm-9 pd-0">
+                <div class="col-sm-12">
+                    <div class="filter-area">
+                        <ul>
+                            <button>{{ knp_pagination_sortable(hebergements,'Id','bp.id') }}</button>
+                            <button>{{ knp_pagination_sortable(hebergements,'prix par jour','bp.prixParJour') }}</button>
 
-
+                        </ul>
+                        <div class="showpro">
+                            <p><span>Showing 1-2</span> of {{ hebergements.getTotalItemCount }} Results</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+                <div class="col-sm-9 pd-0">
+                    {% for h in hebergements %}
+                    <div class="col-sm-6">
+                        <div class="blog-list">
+                            <figure>
+                                <img src="{{ asset('java/huntkingdom/src/Uploads/'~h.getImage()) }}" width="150" height="150" alt="" />
+                                <div class="date">
+                                    <strong>Prix/j</strong>
+                                    <span>{{h.prixParJour}}</span>
+                                </div>
+                            </figure>
+                            <div class="content">
+                                <h3>{{h.capacite}}</h3>
+                                <p>{{h.description}}</p>
+                                <a href="{{ path('one_accommodation_front',{id:h.id}) }}" class="btn3">Read More <i class="fa fa-angle-double-right"></i></a>
+                            </div>
+                        </div>
+                    </div>
+                    {% endfor %}
+                </div>
+            </div>
+            <div class="text-center">
+                <ul class="pagination">
+                    {{ knp_pagination_render(hebergements) }}
+                </ul>
+            </div>
+        </div>
+    </section>
 {% endblock content %}

@@ -1,0 +1,93 @@
+{% extends 'dashboard/base.html.twig' %}
+
+{% block content %}
+
+    <section id="main-content">
+        <section class="wrapper">
+
+            <div class="row">
+                <div class="col-lg-12">
+                    <section class="panel">
+                        <header class="panel-heading">
+                            Form validations
+                        </header>
+                        <div class="panel-body">
+                            <div class="form">
+                                <div class="form-validate form-horizontal" id="feedback_form" method="get" action="">
+                                    {{ form_start(form,{'attr': {'novalidate': 'novalidate','id':'formPublicity'} } ) }}
+                                    <div class="form-group ">
+                                        <label for="cname" class="control-label col-lg-2">Title <span class="required">*</span></label>
+                                        <div class="col-lg-10">
+                                            {{ form_widget(form.titre,{'attr':{'type':'textarea','class':'form-control','placeholder':'title...'},'id':'titre'}) }}
+                                            <div class="alert alert-danger" id="errortitre" hidden>
+                                                Choose a title
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="form-group ">
+                                        <label for="cname" class="control-label col-lg-2">Start Date <span class="required">*</span></label>
+                                        <div class="col-lg-10">
+                                            {{ form_widget(form.dateDebut,{'attr':{'type':'text','class':'form-control','value':'28-10-2013','id':'dp1','size':'16'}}) }}
+                                        </div>
+                                    </div>
+                                    <div class="form-group ">
+                                        <label class="control-label col-lg-2">End Date <span class="required">*</span></label>
+                                        <div class="col-lg-10">
+                                            {{ form_widget(form.dateFin,{'attr':{'type':'text','class':'form-control','value':'28-10-2013','id':'dp1','size':'16'}}) }}
+                                        </div>
+                                    </div>
+                                    <div class="form-group ">
+                                        <label for="cname" class="control-label col-lg-2">Company <span class="required">*</span></label>
+                                        <div class="col-lg-10">
+                                            {{ form_widget(form.compagnie,{'attr':{'type':'text','class':'form-control'},'id':'compagnie'}) }}
+                                            <div class="alert alert-danger" id="errorCompagnie" hidden>
+                                                Enter Company
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="form-group ">
+                                        <label for="cname" class="control-label col-lg-2">Price <span class="required">*</span></label>
+                                        <div class="col-lg-10">
+                                            {{ form_widget(form.prix,{'attr':{'type':'number','class':'form-control','placeholder':'Prix...'},'id':'prix'}) }}
+                                            <div class="alert alert-danger" id="errorPrix" hidden>
+                                                Enter Price
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="form-group ">
+                                        <label for="cname" class="control-label col-lg-2">Description <span class="required">*</span></label>
+                                        <div class="col-lg-10">
+                                            {{ form_widget(form.description,{'attr':{'type':'textarea','class':'form-control','placeholder':'Description...'},'id':'description'}) }}
+                                            <div class="alert alert-danger" id="errorDescription" hidden>
+                                                Enter Description
+                                            </div>
+                                        </div>
+                                    </div>
+                                        <div class="form-group ">
+                                            <label for="cname" class="control-label col-lg-2">image <span class="required">*</span></label>
+                                            <div class="col-lg-10">
+                                                {{ form_widget(form.image,{'attr':{'type':'textarea','class':'form-control','placeholder':'Image...'},'id':'image'}) }}
+                                                <div class="alert alert-danger" id="errorimage" hidden>
+                                                    Choose a picture
+                                                </div>
+                                            </div>
+                                        </div>
+                                    <div class="form-group">
+                                        <div class="col-lg-offset-2 col-lg-10">
+                                            {{ form_widget(form.Submit, {'attr': {'class': 'btn btn-primary'}})}}
+                                        </div>
+                                    </div>
+                                    {{ form_end(form) }}
+                                </div>
+
+                            </div>
+
+                        </div>
+                    </section>
+                </div>
+            </div>
+        </section>
+    </section>
+
+
+{% endblock %}

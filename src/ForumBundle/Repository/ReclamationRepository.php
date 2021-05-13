@@ -2,6 +2,8 @@
 
 namespace ForumBundle\Repository;
 
+use Doctrine\ORM\NonUniqueResultException;
+
 /**
  * ReclamationRepository
  *
@@ -10,4 +12,17 @@ namespace ForumBundle\Repository;
  */
 class ReclamationRepository extends \Doctrine\ORM\EntityRepository
 {
+    public function findToHandle()
+    {
+        try {
+            return $this->getEntityManager()
+                ->createQuery(
+                    "SELECT r
+                FROM ForumBundle:Reclamation
+                r where r.handled = 0 "
+                )
+                ->getResult();
+        } catch (NonUniqueResultException $e) {
+        }
+    }
 }

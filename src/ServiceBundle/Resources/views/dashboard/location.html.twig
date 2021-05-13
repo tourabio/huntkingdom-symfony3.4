@@ -1,1 +1,40 @@
 {% extends 'dashboard/base.html.twig' %}
+{% block content %}
+    <section id="main-content">
+        <section class="wrapper">
+            <div class="row">
+                <div class="col-lg-12">
+                    <ol class="breadcrumb">
+                        <li><i class="fa fa-home"></i><a href="{{path('main_dashboard')}}">Home</a></li>
+                        <li><i class="fa fa-table"></i>Accommodation</li>
+                    </ol>
+                </div>
+            </div>
+            <!-- page start-->
+            <div class="row">
+                <div class="col-md-6 portlets">
+                    <div class="panel panel-default">
+                        <div class="panel-heading">
+                            <h2><strong>Calendar</strong></h2>
+                            <div class="panel-actions">
+                                <a href="#" class="wminimize"><i class="fa fa-chevron-up"></i></a>
+                                <a href="#" class="wclose"><i class="fa fa-times"></i></a>
+                            </div>
+
+                        </div><br><br><br>
+                        <div class="panel-body">
+                            <!-- Widget content -->
+
+                            <!-- Below line produces calendar. I am using FullCalendar plugin. -->
+                            <div id="calendar"></div>
+
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+            <!-- page end-->
+        </section>
+    </section>
+
+{% endblock content %}

@@ -2,14 +2,62 @@
 list_training:
     path:     /training
     defaults: { _controller: TrainingBundle:Default:training }
-list_animals:
-    path:     /animals
-    defaults: { _controller: TrainingBundle:Default:animals }
 
+
+ajouter_animals:
+    path:     /ajouter_animals
+    defaults: { _controller: TrainingBundle:AnimalsMain:ajouter }
+
+list_animals:
+    path:     /list_animals
+    defaults: { _controller: TrainingBundle:AnimalsMain:listDash }
+
+list_animals_hunting_front:
+    path:     /list_animals_hunting_front/{start}/{end}
+    defaults: { _controller: TrainingBundle:AnimalsMain:listHuntingFront }
+
+list_animals_fishing_front:
+    path:     /list_animals_fishing_front
+    defaults: { _controller: TrainingBundle:AnimalsMain:listFishingFront }
+
+
+update_animals:
+    path:     /update_animals/{id}
+    defaults: { _controller: TrainingBundle:AnimalsMain:UpdateAnimal }
+
+delete_animals:
+    path:     /delete_animals/{id}
+    defaults: { _controller: TrainingBundle:AnimalsMain:DeleteAnimal }
 
 training_front:
     path:     /training_front
-    defaults: { _controller: TrainingBundle:Default:fronttraining }
-animals_front:
-    path:     /animals_front
-    defaults: { _controller: TrainingBundle:Default:frontanimals }
+    defaults: { _controller: TrainingBundle:TrainingMain:Create }
+
+delete_entrainement:
+    path:     /delete_entrainement/{id}
+    defaults: { _controller: TrainingBundle:TrainingMain:DeleteEntrainement }
+
+delete_entr:
+    path:     /delete_entr/{id}
+    defaults: { _controller: TrainingBundle:TrainingMain:DeleteEntrainementParEntraineur }
+
+training_list:
+    path:     /training_list
+    defaults: { _controller: TrainingBundle:TrainingMain:listEntrainement }
+
+recuperer_entraineur:
+    path:     /recuperer_entraineur/{id}
+    defaults: { _controller: TrainingBundle:TrainingMain:recupererEntraineur }
+
+ajax_search:
+    path:     /search
+    defaults: { _controller: TrainingBundle:AnimalsMain:search }
+
+chart:
+    path:     /chart
+    defaults: { _controller: TrainingBundle:Default:chart}
+
+rechercheEvenement:
+    path:     /rechercheEvenement
+    defaults: { _controller: TrainingBundle:AnimalsMain:rechercheEvenement}
+

@@ -1,0 +1,324 @@
+{% extends 'front/layout.html.twig' %}
+{% block content %}
+    {% set events = [] %}
+    {% for r in reservations %}
+        {% set myArray = [] %}
+        {% set nb=r.nbJours-1 %}
+        {% set myArray =myArray|merge(
+            [
+                r.id,
+                r.dateArrivee|date("Y"),
+                r.dateArrivee|date("m")|trim('0', 'left')-1,
+                r.dateArrivee|date("d")|trim('0', 'left'),
+                r.dateArrivee|date_modify("+" ~ nb ~ "day")|date("Y"),
+                r.dateArrivee|date_modify("+" ~ nb ~ "day")|date("m")|trim('0', 'left')-1,
+                r.dateArrivee|date_modify("+" ~ nb ~ "day")|date("d")|trim('0', 'left'),
+            ]
+            )
+        %}
+        {% set events = events|merge([myArray]) %}
+    {% endfor %}
+    <script>
+
+        // Create an object for your data
+        var eve={{ events|json_encode()|raw }};
+
+    </script>
+    <!--Breadcumb area start here-->
+    <section class="breadcumb-area jarallax bg-img af">
+        <div class="breadcumb">
+            <div class="container">
+                <div class="row">
+                    <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                        <div class="content">
+                            <h2>Our Accommodations</h2>
+                            <ul>
+                                <li><a href="{{ path('main_front') }}">Home</a></li>
+                                <li><a href="javascript:void(0)">Accomodation</a></li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+    <!--Event manegment area start here-->
+    <section class="event-manegment section">
+        <div class="container">
+            <div class="row">
+                <div class="col-md-6 col-sm-6">
+                    <div class="event-schedule">
+                        <div class="section-heading2">
+                            <h2>Event schedule</h2></div>
+                        <table class="table table-hover">
+                            <tbody>
+                            <br><br><br><br>
+                            <!-- page start-->
+                                            <!-- Widget content -->
+
+                                            <!-- Below line produces calendar. I am using FullCalendar plugin. -->
+                                            <div id="calendar"></div>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+    <!--Event manegment area end here-->
+    <section class="blog-details section">
+        <div class="container">
+
+            <div class="row">
+                <div class="col-sm-9">
+                    <div class="blog-details">
+                        <div class="blogs">
+                            <figure>
+                                <div class="date">Price<span>{{ hebergements.prixParJour}} dt</span></div>
+                                <img src="{{ asset('java/huntkingdom/src/Uploads/'~hebergements.getImage()) }}" width="100px" height="100px" alt="" />
+                            </figure>
+                            <div class="content-post">
+                                <div class="content">
+                                    <ul>
+                                        <li><i class="fas fa-bed"></i><span>{{ hebergements.nbLits}}</span></li>
+                                        <li><i class="fas fa-square"></i><span>{{ hebergements.nbChambre}}</span></li>
+                                        <li><i class="fa fa-user"></i><span>{{ hebergements.capacite}}</span></li>
+                                        <li><i class="fa fa-address-book"></i><span>{{ hebergements.adresse}}</span></li>
+                                    </ul>
+                                    <h4>Accommodation of type{{ hebergements.id}}</h4>
+                                </div>
+                                <div class="testi">
+                                    <div class="dbox">
+                                        <div class="dleft">
+                                            <h5>Description:   </h5>
+                                        </div>
+                                        <div class="dright">
+                                            <div class="con">
+                                                <p>{{ hebergements.description}}.</p>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="comment-box">
+                            <h3>Make your <span>Reservation</span></h3>
+                            {{ form_start(form) }}
+                            <div class="dbox">
+                                <fieldset class="w-50 floatleft pd-r15 mr-b30" id="nc">
+                                    <label> Numbre of days</label>
+                                    {{ form_widget(form.nbJours, {'attr': {'type':'text','value':1}})}}
+                                </fieldset>
+                                <fieldset class="w-50 floatleft pd-r15 mr-b30" id="pcc">
+                                    <label> Total Price</label>
+                                    {{ form_widget(form.prixTot, {'attr': {'type':'text','id':'c','value':hebergements.prixParJour,'disabled':'true'}})}}
+                                </fieldset>
+                                <fieldset class="w-50 floatleft pd-r150 mr-b30">
+                                    <label> Starts </label>
+                                    {{ form_widget(form.dateArrivee, {'attr': {'type':'text'}})}}
+                                </fieldset>
+
+                            </div>
+                            <div id="ccc">
+                                {{ form_widget(form.Submit, {'attr': {'class': 'btn1'}})}}
+                                {{ form_end(form) }}
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <script src="{{ asset('front/assets/js/vendor/jquery-3.2.1.min.js') }}"></script>
+    <script type="text/javascript">
+        $("#nc").keyup(function(){
+            $('#pcc input').removeAttr('disabled');
+            $("#pcc input").val($("#nc input").val()* {{ hebergements.prixParJour }} );
+            $('#pcc input').attr('disabled','true');
+        })
+
+        $("#ccc").click(function(){
+            $('#pcc input').removeAttr('disabled');
+        })
+    </script>
+    <!--Blog details area end here-->
+{% endblock content %}
+{% block js %}
+    <script>
+        var Script = function () {
+
+            document.addEventListener('DOMContentLoaded', () => {
+
+                // Get the object from the window object
+                var eve = window.eve;
+
+                // Now you have a JavaScript object
+                console.log(eve);
+            });
+            /* initialize the external events
+             -----------------------------------------------------------------*/
+
+            $('#external-events div.external-event').each(function() {
+
+                // create an Event Object (http://arshaw.com/fullcalendar/docs/event_data/Event_Object/)
+                // it doesn't need to have a start or end
+                var eventObject = {
+                    title: $.trim($(this).text()) // use the element's text as the event title
+                };
+
+                // store the Event Object in the DOM element so we can get to it later
+                $(this).data('eventObject', eventObject);
+
+                // make the event draggable using jQuery UI
+                $(this).draggable({
+                    zIndex: 999,
+                    revert: true,      // will cause the event to go dashboard to its
+                    revertDuration: 0  //  original position after the drag
+                });
+
+            });
+
+
+            /* initialize the calendar
+             -----------------------------------------------------------------*/
+
+            var date = new Date();
+            var d = date.getDate();
+            var m = date.getMonth();
+            var y = date.getFullYear();
+            var v= ["non reserve", null, null];
+            for (var i = 0; i < eve.length; i++) {
+                eve[i][0]=eve[i][0].toString();
+                eve[i][1]=new Date(eve[i][1],eve[i][2],eve[i][3]);
+                eve[i][2]=new Date(eve[i][4],eve[i][5],eve[i][6]);
+            }
+            for (var j = eve.length; j < 100; j++) {
+                eve.push(v);
+            }
+
+
+            $('#calendar').fullCalendar({
+                header: {
+                    left: 'prev,next today',
+                    center: 'title',
+                    right: 'month,basicWeek,basicDay'
+                },
+                editable: true,
+                droppable: true, // this allows things to be dropped onto the calendar !!!
+                drop: function(date, allDay) { // this function is called when something is dropped
+
+                    // retrieve the dropped element's stored Event Object
+                    var originalEventObject = $(this).data('eventObject');
+
+                    // we need to copy it, so that multiple events don't have a reference to the same object
+                    var copiedEventObject = $.extend({}, originalEventObject);
+
+                    // assign it the date that was reported
+                    copiedEventObject.start = date;
+                    copiedEventObject.allDay = allDay;
+
+                    // render the event on the calendar
+                    // the last `true` argument determines if the event "sticks" (http://arshaw.com/fullcalendar/docs/event_rendering/renderEvent/)
+                    $('#calendar').fullCalendar('renderEvent', copiedEventObject, true);
+
+                    // is the "remove after drop" checkbox checked?
+                    if ($('#drop-remove').is(':checked')) {
+                        // if so, remove the element from the "Draggable Events" list
+                        $(this).remove();
+                    }
+
+                },
+                events: [
+                    {
+                        title: eve[0][0],
+                        start: eve[0][1],
+                        end: eve[0][2]
+                    },
+                    {
+                        title: eve[1][0],
+                        start: eve[1][1],
+                        end: eve[1][2]
+                    },
+                    {
+                        title: eve[2][0],
+                        start: eve[2][1],
+                        end: eve[2][2]
+                    },
+                    {
+                        title: eve[3][0],
+                        start: eve[3][1],
+                        end: eve[3][2]
+                    },
+                    {
+                        title: eve[4][0],
+                        start: eve[4][1],
+                        end: eve[4][2]
+                    },
+                    {
+                        title: eve[5][0],
+                        start: eve[5][1],
+                        end: eve[5][2]
+                    },
+                    {
+                        title: eve[5][0],
+                        start: eve[5][1],
+                        end: eve[5][2]
+                    },
+                    {
+                        title: eve[6][0],
+                        start: eve[6][1],
+                        end: eve[6][2]
+                    },
+                    {
+                        title: eve[6][0],
+                        start: eve[6][1],
+                        end: eve[6][2]
+                    },
+                    {
+                        title: eve[7][0],
+                        start: eve[7][1],
+                        end: eve[7][2]
+                    },
+                    {
+                        title: eve[8][0],
+                        start: eve[8][1],
+                        end: eve[8][2]
+                    },
+                    {
+                        title: eve[9][0],
+                        start: eve[9][1],
+                        end: eve[9][2]
+                    },
+                    {
+                        title: eve[10][0],
+                        start: eve[10][1],
+                        end: eve[10][2]
+                    },
+                    {
+                        title: eve[11][0],
+                        start: eve[11][1],
+                        end: eve[11][2]
+                    },
+                    {
+                        title: eve[12][0],
+                        start: eve[12][1],
+                        end: eve[12][2]
+                    },
+                    {
+                        title: eve[13][0],
+                        start: eve[13][1],
+                        end: eve[13][2]
+                    },
+                    {
+                        title: eve[14][0],
+                        start: eve[14][1],
+                        end: eve[14][2]
+                    }
+                ]
+            });
+
+        }();
+    </script>
+{% endblock %}

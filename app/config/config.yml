@@ -9,15 +9,20 @@ imports:
     - { resource: "@ForumBundle/Resources/config/services.yml" }
     - { resource: "@ProductBundle/Resources/config/services.yml" }
     - { resource: "@ReparationBundle/Resources/config/services.yml" }
+    - { resource: "@ApiBundle/Resources/config/services.yml" }
 # Put parameters here that don't need to change on each machine where the app is deployed
 # https://symfony.com/doc/current/best_practices/configuration.html#application-related-configuration
 parameters:
     locale: en
-    photos_directory: '%kernel.root_dir%/../web/uploads/photos'
+    photos_directory: '%kernel.root_dir%/../web/java/huntkingdom/src/Uploads'
+    media_directory: '%kernel.root_dir%/../web/java/huntkingdom/src/Uploads'
+    app.path.piece_images: /java/huntkingdom/src/Uploads
+    app.path.user_contracts: /java/huntkingdom/src/Uploads
+
 
 framework:
     #esi: ~
-    #translator: { fallbacks: ['%locale%'] }
+    translator: { fallbacks: ['%locale%'] }
     secret: '%secret%'
     router:
         resource: '%kernel.project_dir%/app/config/routing.yml'
@@ -65,13 +70,14 @@ doctrine:
         naming_strategy: doctrine.orm.naming_strategy.underscore
         auto_mapping: true
 
-# Swiftmailer Configuration
 swiftmailer:
-    transport: '%mailer_transport%'
-    host: '%mailer_host%'
-    username: '%mailer_user%'
-    password: '%mailer_password%'
-    spool: { type: memory }
+  transport: '%mailer_transport%'
+  encryption: ssl
+  auth_mode: login
+  host: '%mailer_host%'
+  username: '%mailer_user%'
+  password: '%mailer_password%'
+  spool: { type: memory }
 
 fos_user:
     db_driver: orm # other valid values are 'mongodb' and 'couchdb'
@@ -88,3 +94,41 @@ sensio_framework_extra:
    router:
         annotations: false
 
+vich_uploader:
+    db_driver: orm
+    mappings:
+        user_contracts:
+            uri_prefix: /contract
+            upload_destination: '%kernel.root_dir%/../web/contract/'
+            namer: vich_uploader.namer_uniqid
+
+
+# knp_paginator Configuration
+
+knp_paginator:
+  page_range: 5                       # number of links showed in the pagination menu (e.g: you have 10 pages, a page_range of 3, on the 5th page you'll see links to page 4, 5, 6)
+  default_options:
+    page_name: page                 # page query parameter name
+    sort_field_name: sort           # sort field query parameter name
+    sort_direction_name: direction  # sort direction query parameter name
+    distinct: true                  # ensure distinct results, useful when ORM queries are using GROUP BY statements
+    filter_field_name: filterField  # filter field query parameter name
+    filter_value_name: filterValue  # filter value query parameter name
+  template:
+    pagination: '@KnpPaginator/Pagination/twitter_bootstrap_v4_pagination.html.twig'     # sliding pagination controls template
+    sortable: '@KnpPaginator/Pagination/font_awesome_sortable_link.html.twig' # sort link template
+    filtration: '@KnpPaginator/Pagination/filtration.html.twig'  # filters template
+
+
+gregwar_captcha: ~
+
+cmen_google_charts:
+  version: "current"
+
+knp_snappy:
+  temporary_folder: "%kernel.cache_dir%/pdf"
+  process_timeout: 20 # In seconds
+  pdf:
+    enabled: true
+    binary: "\"C:\\Program Files\\wkhtmltopdf\\bin\\wkhtmltopdf.exe\""
+    options: []

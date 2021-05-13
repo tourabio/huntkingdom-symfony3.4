@@ -1,6 +1,13 @@
 var Script = function () {
 
+    document.addEventListener('DOMContentLoaded', () => {
 
+        // Get the object from the window object
+        var eve = window.eve;
+
+        // Now you have a JavaScript object
+        console.log(eve);
+    });
     /* initialize the external events
      -----------------------------------------------------------------*/
 
@@ -32,6 +39,16 @@ var Script = function () {
     var d = date.getDate();
     var m = date.getMonth();
     var y = date.getFullYear();
+    var v= ["non reserve", null, null];
+    for (var i = 0; i < eve.length; i++) {
+        eve[i][0]=eve[i][0].toString();
+        eve[i][1]=new Date(eve[i][1],eve[i][2],eve[i][3]);
+        eve[i][2]=new Date(eve[i][4],eve[i][5],eve[i][6]);
+    }
+    for (var j = eve.length; j < 100; j++) {
+        eve.push(v);
+    }
+
 
     $('#calendar').fullCalendar({
         header: {
@@ -66,48 +83,89 @@ var Script = function () {
         },
         events: [
             {
-                title: 'All Day Event',
-                start: new Date(y, m, 1)
+                title: eve[0][0],
+                start: eve[0][1],
+                end: eve[0][2]
             },
             {
-                title: 'Long Event',
-                start: new Date(y, m, d-5),
-                end: new Date(y, m, d-2)
+                title: eve[1][0],
+                start: eve[1][1],
+                end: eve[1][2]
             },
             {
-                id: 999,
-                title: 'Repeating Event',
-                start: new Date(y, m, d-3, 16, 0),
-                allDay: false
+                title: eve[2][0],
+                start: eve[2][1],
+                end: eve[2][2]
             },
             {
-                id: 999,
-                title: 'Repeating Event',
-                start: new Date(y, m, d+4, 16, 0),
-                allDay: false
+                title: eve[3][0],
+                start: eve[3][1],
+                end: eve[3][2]
             },
             {
-                title: 'Meeting',
-                start: new Date(y, m, d, 10, 30),
-                allDay: false
+                title: eve[4][0],
+                start: eve[4][1],
+                end: eve[4][2]
             },
             {
-                title: 'Lunch',
-                start: new Date(y, m, d, 12, 0),
-                end: new Date(y, m, d, 14, 0),
-                allDay: false
+                title: eve[5][0],
+                start: eve[5][1],
+                end: eve[5][2]
             },
             {
-                title: 'Birthday Party',
-                start: new Date(y, m, d+1, 19, 0),
-                end: new Date(y, m, d+1, 22, 30),
-                allDay: false
+                title: eve[5][0],
+                start: eve[5][1],
+                end: eve[5][2]
             },
             {
-                title: 'Click for Google',
-                start: new Date(y, m, 28),
-                end: new Date(y, m, 29),
-                url: 'http://google.com/'
+                title: eve[6][0],
+                start: eve[6][1],
+                end: eve[6][2]
+            },
+            {
+                title: eve[6][0],
+                start: eve[6][1],
+                end: eve[6][2]
+            },
+            {
+                title: eve[7][0],
+                start: eve[7][1],
+                end: eve[7][2]
+            },
+            {
+                title: eve[8][0],
+                start: eve[8][1],
+                end: eve[8][2]
+            },
+            {
+                title: eve[9][0],
+                start: eve[9][1],
+                end: eve[9][2]
+            },
+            {
+                title: eve[10][0],
+                start: eve[10][1],
+                end: eve[10][2]
+            },
+            {
+                title: eve[11][0],
+                start: eve[11][1],
+                end: eve[11][2]
+            },
+            {
+                title: eve[12][0],
+                start: eve[12][1],
+                end: eve[12][2]
+            },
+            {
+                title: eve[13][0],
+                start: eve[13][1],
+                end: eve[13][2]
+            },
+            {
+                title: eve[14][0],
+                start: eve[14][1],
+                end: eve[14][2]
             }
         ]
     });

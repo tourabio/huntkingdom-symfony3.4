@@ -1,5 +1,58 @@
 {% extends 'front/layout.html.twig' %}
 {% block content %}
+    <section class="breadcumb-area jarallax bg-img af">
+        <div class="breadcumb">
+            <div class="container">
+                <div class="row">
+                    <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                        <div class="content">
+                            <h2>Your Plan</h2>
+
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+    <section class="price-area section bg-img jarallax">
+        <div class="container">
+            <div class="row">
+                <div class="col-md-12 col-sm-12">
+                    <div class="section-heading">
+                        <h2>Publicity </h2>
+                    </div>
+                </div>
+            </div>
+            {% for publicite in publicites %}
+                <div class="row">
+                    <div class="col-md-12 col-sm-12">
+
+                        <div class="price-lists">
+                            <div class="phead">
+
+                                <div class="prices">
+                                    <strong><a class="fas fa-dollar-sign"><a href="{{ asset('https://'~publicite.getCompagnie()) }}">{{ publicite.titre }}</strong>
+                                </div>
+                            </div>
+                            <div class="pbody">
+                                <ul>
+                                    <li><a href="{{ asset(''~publicite.getCompagnie()) }}"><img src="{{ asset('java/huntkingdom/src/Uploads/'~publicite.getImage()) }}" width="600" height="400"> </a></li>
+                                    <li><span style="color:saddlebrown">{{ publicite.description }}</span></li>
+                                </ul>
+
+                            </div>
+                        </div>
+
+
+                    </div>
+                </div>
+            {% endfor %}
+        </div>
+
+    </section>
+
+
 
 
 {% endblock content %}
+

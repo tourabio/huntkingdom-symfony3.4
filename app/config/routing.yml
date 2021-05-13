@@ -1,3 +1,6 @@
+api:
+    resource: "@ApiBundle/Resources/config/routing.yml"
+    prefix:   /api
 
 user:
     resource: "@UserBundle/Resources/config/routing.yml"
@@ -46,3 +49,12 @@ main_front:
 about:
     path:     /about
     defaults: { _controller: AppBundle:Default:about }
+
+
+please_wait:
+    path:     /please_wait
+    defaults: { _controller: AppBundle:Default:please_wait }
+
+mgilet_notification:
+    resource: "@MgiletNotificationBundle/Controller/"
+    prefix: /notifications

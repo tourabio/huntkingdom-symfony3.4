@@ -4,6 +4,8 @@ namespace ProductBundle\Controller;
 
 use ProductBundle\Entity\Promotion;
 use ProductBundle\Form\PromotionType;
+use ProductBundle\Entity\Produit;
+use ProductBundle\Form\ProduitType;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\Form\Extension\Core\Type\SubmitType;
 use Symfony\Component\HttpFoundation\Request;
@@ -12,22 +14,55 @@ class DefaultController extends Controller
 {
     public function productsAction()
     {
-        return $this->render('@Product/dashboard/products.html.twig');
+        $produit = $this->getDoctrine()->getRepository(Produit::class)->findAll();
+        return $this->render('@Product/dashboard/productss.html.twig', array(
+            'produit' => $produit
+        ));
     }
+
+    public function deleteAction($id)
+    {
+        $em=$this->getDoctrine()->getManager();
+        $produit=$em->getRepository(Produit::class)->find($id);
+        $em->remove($produit);
+        $em->flush();
+        return $this->redirectToRoute('list_product');
+    }
+
     public function frontshopAction()
     {
-        return $this->render('@Product/front/shop.html.twig');
+        $produit = $this->getDoctrine()->getRepository(Produit::class)->findAll();
+        return $this->render('@Product/front/shop.html.twig', array(
+            'produit' => $produit
+        ));
     }
+
     public function frontshopsingleAction()
     {
         return $this->render('@Product/front/shop-single.html.twig');
     }
 
-    public function productListAction()
+    public function productListAction(Request $request)
     {
-        $produits = $this->getDoctrine()->getRepository('ProductBundle:Produit')->findAll();
+        $em = $this->getDoctrine()->getManager();
+        $queryBuilder = $em->getRepository("ProductBundle:Produit")->createQueryBuilder('p');
+        if($request->query->getAlnum('filter')){
+            $queryBuilder
+                ->where('p.libProd LIKE :libProd')
+                ->setParameter('libProd','%'.$request->query->getAlnum('filter').'%');
+        }
+        $query = $queryBuilder->getQuery();
+        $paginator  = $this->get('knp_paginator');
+
+        $result = $paginator->paginate(
+            $query,
+            $request->query->getInt('page',1),
+            $request->query->getInt('limit',2)
+        );
+
+
         return $this->render('@Product/dashboard/products.html.twig', [
-            'produits' => $produits,
+            'produits' => $result,
         ]);
     }
     public function affectPromotionAction($id,Request $request)
@@ -39,12 +74,14 @@ class DefaultController extends Controller
         $form->handleRequest($request);
         if ($form->isSubmitted() && $form->isValid()) {
             $em = $this->getDoctrine()->getManager();
-            $promotion->setActive(true);
             $promotion->setDateDebut($date);
             $produit->setPromotion($promotion);
+            $produit->setPrixFinale($produit->getPrix() - $produit->getPrix() * $promotion->getTaux() ) ;
             $em->persist($promotion);
             $em->persist($produit);
             $em->flush();
+            return $this->redirectToRoute('list_products');
+
         }
 
 
@@ -78,8 +115,6 @@ class DefaultController extends Controller
     {
         $promotion = $this->getDoctrine()->getRepository('ProductBundle:Promotion')->find($id);
         $form = $this->createForm(PromotionType::class, $promotion);
-        $form->remove('confirm');
-        $form->add('Modify', SubmitType::class);
         $form->handleRequest($request);
         if ($form->isSubmitted() && $form->isValid()) {
             $promotion = $form->getData();

@@ -11,16 +11,37 @@ use UserBundle\Entity\User;
  * @ORM\Table(name="competition")
  * @ORM\Entity(repositoryClass="EventsBundle\Repository\CompetitionRepository")
  */
+
 class Competition
 {
     /**
      * Many Groups have Many Users.
-     * @ORM\ManyToMany(targetEntity="UserBundle\Entity\User", mappedBy="competitions")
+     * @ORM\ManyToMany(targetEntity="UserBundle\Entity\User", inversedBy="competitions")
      */
     private $users;
 
+    /**
+     * @return mixed
+     */
+    public function getUsers()
+    {
+        return $this->users;
+    }
+
+    /**
+     * @param mixed $users
+     */
+    public function setUsers($users)
+    {
+        $this->users = $users;
+    }
+
     public function __construct() {
         $this->users = new \Doctrine\Common\Collections\ArrayCollection();
+    }
+    public function addtocompetition($user)
+    {
+        $this->users->add($user);
     }
 
     /**

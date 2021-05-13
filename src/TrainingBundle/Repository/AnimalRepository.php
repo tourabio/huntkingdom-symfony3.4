@@ -10,4 +10,87 @@ namespace TrainingBundle\Repository;
  */
 class AnimalRepository extends \Doctrine\ORM\EntityRepository
 {
+    public function findAnimal()
+    {
+        $Query=$this->getEntityManager()->createQuery(
+            "select A.nom from TrainingBundle:Animal A ")
+        ;
+
+
+        return $Query->getResult();
+    }
+    public function findImageAnimal($id)
+    {
+        $Query=$this->getEntityManager()->createQuery(
+            "select A.image_animal from TrainingBundle:Animal A where A.id = :id ")
+            ->setParameter('id',$id);
+
+
+        return $Query->getResult();
+    }
+    public function findAnimalHunting($start,$end)
+    {
+        $Query=$this->getEntityManager()->createQuery(
+            "select A from TrainingBundle:Animal A where A.categorie='hunting' AND A.debutSaison>=:start AND A.finSaison<=:fin ")
+            ->setParameter('start',$start)
+            ->setParameter('fin',$end)
+        ;
+
+        return $Query->getResult();
+    }
+
+    public function findAnimalHuntingAll()
+    {
+        $Query=$this->getEntityManager()->createQuery(
+            "select A from TrainingBundle:Animal A where A.categorie='Hunting' ")
+        ;
+
+        return $Query->getResult();
+    }
+    public function findAnimalFishing()
+    {
+        $Query=$this->getEntityManager()->createQuery(
+            "select A from TrainingBundle:Animal A where A.categorie='Fishing' ")
+        ;
+
+        return $Query->getResult();
+    }
+    public function findIdAnimal($animals)
+    {
+        $Query=$this->getEntityManager()->createQuery(
+            "select A from TrainingBundle:Animal A where A.nom = :nom ")
+            ->setParameter('nom',$animals);
+
+
+        return $Query->getResult();
+    }
+    public function findAnimalId($animals)
+    {
+        $Query=$this->getEntityManager()->createQuery(
+            "select A from TrainingBundle:Animal A where A.id = :id ")
+            ->setParameter('id',$animals);
+
+
+        return $Query->getResult();
+    }
+    public function findAnimalMonth()
+    {
+        $date=new \DateTime();
+        $months=$date->format('m');
+        $Query=$this->getEntityManager()->createQuery(
+            "select A from TrainingBundle:Animal A where A.debutSaison= $months ")
+        ;
+
+        return $Query->getResult();
+    }
+    public function findNom($input)
+    {
+        $query=$this->getEntityManager()->createQuery("SELECT f FROM TrainingBundle:Animal f 
+        WHERE f.nom LIKE '%$input%' 
+        or f.categorie LIKE '%$input%' 
+        ");
+    }
+
+
+
 }

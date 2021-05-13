@@ -1,5 +1,63 @@
 {% extends 'front/layout.html.twig' %}
+
 {% block content %}
 
+    {#<li><a href="{{ path('readp') }}"> View Cart</a></li>#}
+    <section class="breadcumb-area jarallax bg-img af">
+        <div class="breadcumb">
+            <div class="container">
+                <div class="row">
+                    <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                        <div class="content">
+                            <h2>Our products</h2>
+                            <ul>
+                                <li><a href="#">Home</a></li>
+                                <li><a href="javascript:void(0)">shop</a></li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+    <!--Breadcumb area end here-->
+    <!--Products area start here-->
+    <section class="shop-page section">
+        <div class="container">
+            <div class="row">
 
-{% endblock content %}
+                <div class="col-sm-9 pd-0">
+                    <div class="col-sm-12">
+                        <div class="filter-area">
+
+                            <div class="list-grid">
+                                <ul class="list-inline">
+                                    <li><a href="#" id="gridview"><i class="fa fa-th"></i></a></li>
+                                    <li><a href="#" id="listview"><i class="fa fa-list"></i></a></li>
+                                </ul>
+                            </div>
+
+                        </div>
+
+                        <div class="col-sm-12 pd-0">
+                            {% for pr in produit  %}
+                                <div class="col-sm-4 products">
+                                    <figure><img src="{{ asset('java/huntkingdom/src/Uploads/' ~ pr.image) }}" width="15px" height="15px" alt="" /></figure>
+                                    <div class="contents">
+                                        <h3>{{  pr.libprod }}</h3>
+                                        <p>{{ pr.description }}</p>
+                                        <p>{{ pr.type }}</p>
+                                        <span>{{ pr.prix }}</span>
+
+
+                                        <a href="{{ path('addtopanierpr', { 'id': pr.id }) }}" class="btn4">Add To Cart</a>
+                                    </div>
+                                </div>
+                            {% endfor %}
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+    </section>
+{% endblock %}

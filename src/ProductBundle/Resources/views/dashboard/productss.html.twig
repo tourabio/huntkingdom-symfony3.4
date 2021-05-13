@@ -1,0 +1,88 @@
+{% extends 'dashboard/base.html.twig' %}
+{% block content %}
+    <!--main content start-->
+    <section id="main-content">
+        <section class="wrapper">
+            <div class="row">
+                <div class="col-lg-12">
+                    <h3 class="page-header"><i class="fa fa-table"></i> products</h3>
+                    <ol class="breadcrumb">
+                        <li><i class="fa fa-home"></i><a href="{{path('main_dashboard')}}">Home</a></li>
+                        <li><i class="fa fa-table"></i>products</li>
+                    </ol>
+                </div>
+            </div>
+            <!-- page start-->
+            <div class="row">
+                <div class="col-lg-12">
+                    <section class="panel">
+                        <a href="{{ path('createpr') }}">    Add product  </a><br>
+                        <script src="{{ asset('sorttable.js') }}"></script>
+                        <table class="sortable">
+                            <tbody>
+                            <tr>
+                                <th><i class="icon_profile"></i> Libelle Product</th>
+                                <th><i class="icon_box-checked"></i> Price</th>
+                                <th><i class="icon_wallet"></i> Description</th>
+                                <th><i class="icon_mail_alt"></i> Quantity</th>
+                                <th><i class="icon_gift_alt"></i> Date </th>
+                                <th><i class="icon_mobile"></i> Type</th>
+                                <th><i class="icon_image"></i> Picture</th>
+                                <th><i class="icon_cogs"></i> Action </th>
+                            </tr>
+                            {% for produit in produit %}
+                                <tr>
+                                    <td>{{ produit.libProd }}</td>
+                                    <td>{{ produit.prix }}</td>
+                                    <td>{{ produit.description }}</td>
+                                    <td>{{ produit.qteProd }}</td>
+                                    <td>{{ produit.dateAjout|date }}</td>
+                                    <td>{{ produit.type }}</td>
+                                    <td><img src="{{ asset('java/huntkingdom/src/Uploads/' ~ produit.image) }}" width="70" height="70" alt="" /></td>
+
+                                    <td>
+                                        <div class="btn-group">
+                                    <td>
+
+                                        <a href="{{ path('deletepr', { 'id': produit.id }) }}"> Remove </a><br>
+                                        <a href="{{ path('updatepr', { 'id': produit.id }) }}"> Update </a><br>
+                                        <a href="{{ path('addtopanierpr', { 'id': produit.id }) }}"> Add To Cart </a><br>
+
+                                    </td>
+                                    </td>
+                                </tr>
+                            {% endfor %}
+
+                            </tbody>
+                        </table>
+                    </section>
+                </div>
+            </div>
+            <!-- page end-->
+        </section>
+    </section>
+{% endblock %}
+
+
+
+
+
+
+
+{#
+<h1>product list : </h1>
+{% for produit in produits %}
+    <ul>
+
+        <li>{{ produit.libProd }}</li>
+        <li>{{ produit.prix }}</li>
+        <li>{{ produit.description }}</li>
+        <li>{{ produit.qteProd }}</li>
+        <li>{{ produit.dateAjout |date }}</li>
+        <li> {{ produit.image }}</li>
+        <li>{{ produit.type }}
+        </li><li><a href="{{ path('affect_promotion',{'id': produit.id}) }}">affect promotion</a></li>
+    </ul>
+{% endfor %}
+
+#}

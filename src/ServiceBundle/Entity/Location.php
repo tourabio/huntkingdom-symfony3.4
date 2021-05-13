@@ -19,10 +19,10 @@ class Location
     private $user;
 
     /**
-     * @ORM\ManyToOne(targetEntity="Service")
-     * @ORM\JoinColumn(name="ServiceId", referencedColumnName="id")
+     * @ORM\ManyToOne(targetEntity="MoyenDeTransport")
+     * @ORM\JoinColumn(name="MoyenDeTransportId", referencedColumnName="id")
      */
-    private $service;
+    private $MoyenDeTransport;
 
     /**
      * @var int
@@ -125,6 +125,38 @@ class Location
         $this->prixTot = $prixTot;
 
         return $this;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getUser()
+    {
+        return $this->user;
+    }
+
+    /**
+     * @param mixed $user
+     */
+    public function setUser($user)
+    {
+        $this->user = $user;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getMoyenDeTransport()
+    {
+        return $this->MoyenDeTransport;
+    }
+
+    /**
+     * @param mixed $MoyenDeTransport
+     */
+    public function setMoyenDeTransport($MoyenDeTransport)
+    {
+        $this->MoyenDeTransport = $MoyenDeTransport;
     }
 
     /**

@@ -17,3 +17,95 @@ promotion_front:
 reparation_front_repare:
     path:     /repare/{idP}/{idR}
     defaults: { _controller: ReparationBundle:Default:repare }
+
+
+reparation_front_list_your_defective:
+    path:     /consult_your_defective/{idUser}
+    defaults: { _controller: ReparationBundle:Default:list_you_defective }
+
+
+reparation_front_show_progress:
+    path:     /consult_your_progress/{idP}
+    defaults: { _controller: ReparationBundle:Default:show_progress }
+
+
+reparation_front_show_ready:
+    path:     /ready/{idP}
+    defaults: { _controller: ReparationBundle:Default:show_ready }
+
+show_repairer_profile:
+    path:     /show_repairer_profile/{idR}
+    defaults: { _controller: ReparationBundle:Default:show_repairer_profile }
+
+
+finish_reparation:
+    path:     /finish_reparation/{idR}/{idP}
+    defaults: { _controller: ReparationBundle:Default:finish_reparation }
+
+
+
+
+reparation_serialize_all:
+    path:     /api/all
+    defaults: { _controller: ReparationBundle:api:all }
+
+reparation_serialize_add:
+    path:     /api/add
+    defaults: { _controller: ReparationBundle:api:add_defective }
+
+
+reparation_serialize_list_you_defective:
+    path:     /api/list_your_defective/{idUser}
+    defaults: { _controller: ReparationBundle:api:list_you_defective }
+
+reparation_serialize_show_progress:
+    path:     /api/show_progress/{idP}
+    defaults: { _controller: ReparationBundle:api:show_progress }
+
+reparation_serialize_repare:
+    path:     /api/repare/{idP}/{idR}
+    defaults: { _controller: ReparationBundle:api:repare }
+
+
+reparation_serialize_show_ready:
+    path:     /api/ready/{idP}
+    defaults: { _controller: ReparationBundle:api:show_ready }
+
+reparation_serialize_finish_reparation:
+    path:     /api/finish_reparation/{idR}/{idP}
+    defaults: { _controller: ReparationBundle:api:finish_reparation }
+
+
+
+reparation_serialize_show_repairer_profile:
+    path:     /api/show_repairer_profile/{idR}
+    defaults: { _controller: ReparationBundle:api:show_repairer_profile }
+
+
+reparation_serialize_count_your_ready:
+    path:     /api/count_your_ready/{idUser}
+    defaults: { _controller: ReparationBundle:api:count_your_ready }
+
+
+reparation_serialize_search:
+    path:     /api/search/{name}
+    defaults: { _controller: ReparationBundle:api:search }
+
+
+reparation_serialize_send_email:
+    path:     /api/send/{to}
+    defaults: { _controller: ReparationBundle:api:send_Email }
+
+
+reparation_serialize_produit_en_promo:
+    path:     /api/product_promo
+    defaults: { _controller: ReparationBundle:api:listPromotion }
+
+reparation_serialize_delete_finished_promo:
+    path:     /api/delete_finished_promo
+    defaults: { _controller: ReparationBundle:api:endPromotion }
+
+
+reparation_serialize_isExists:
+    path:     /api/isExists
+    defaults: { _controller: ReparationBundle:api:isExist }

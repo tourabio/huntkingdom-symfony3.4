@@ -1,5 +1,66 @@
-{% extends 'front/layout.html.twig' %}
-{% block content %}
+ {% extends 'front/layout.html.twig' %}
+    {% block content %}
+        <!--Breadcumb area start here-->
+        <section class="breadcumb-area jarallax bg-img af">
+            <div class="breadcumb">
+                <div class="container">
+                    <div class="row">
+                        <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                            <div class="content">
+                                <h2>Our Means of Transport</h2>
+                                <ul>
+                                    <li><a href="{{ path('main_front') }}">Home</a></li>
+                                    <li><a href="javascript:void(0)">Transport</a></li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+        <section class="blog-pages section">
+            <div class="container">
+                <div class="row">
+                    <div class="col-sm-9 pd-0">
+                        <div class="col-sm-12">
+                            <div class="filter-area">
+                                <ul>
+                                    <button>{{ knp_pagination_sortable(transports,'Id','bp.id') }}</button>
+                                    <button>{{ knp_pagination_sortable(transports,'prix par jour','bp.prixParJour') }}</button>
 
-
-{% endblock content %}
+                                </ul>
+                                <div class="showpro">
+                                    <p><span>Showing 1-2</span> of {{ transports.getTotalItemCount }} Results</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                        <div class="col-sm-9 pd-0">
+                            {% for h in transports %}
+                            <div class="col-sm-6">
+                                <div class="blog-list">
+                                    <figure>
+                                        <img src="{{ asset('java/huntkingdom/src/Uploads/'~h.getImage()) }}" alt="" />
+                                        <div class="date">
+                                            <strong>prix/j</strong>
+                                            <span>{{h.prixParJour}}dt</span>
+                                        </div>
+                                    </figure>
+                                    <div class="content">
+                                        <h3>{{h.marque}}</h3>
+                                        <p>{{h.Categorie}}</p>
+                                        <a href="{{ path('one_transport_front',{id:h.id}) }}" class="btn3">Read More <i class="fa fa-angle-double-right"></i></a>
+                                    </div>
+                                </div>
+                            </div>
+                            {% endfor %}
+                        </div>
+                </div>
+                <div class="text-center">
+                    <ul class="pagination">
+                        {{ knp_pagination_render(transports) }}
+                    </ul>
+                </div>
+            </div>
+        </section>
+    {% endblock content %}

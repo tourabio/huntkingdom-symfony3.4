@@ -1,0 +1,263 @@
+{% extends 'front/layout.html.twig' %}
+
+
+{% block content %}
+
+<section class="breadcumb-area jarallax bg-img af">
+    <div class="breadcumb">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                    <div class="content">
+                        <h2> {{ post.title }} </h2>
+                        <ul>
+                            <li><a href="index.html">Home</a></li>
+                            <li><a href="javascript:void(0)">Posts/{{ post.title }}</a></li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+<!--Breadcumb area end here-->
+<!--About area start here-->
+    <section class="blog-details section">
+        <div class="container">
+            <div class="row">
+
+                <div class="col-sm-9">
+                    <div class="blog-details">
+                        <div class="blogs">
+                            <figure>
+                                <div class="date"><strong>{{ post.views }}</strong><span>views</span></div>
+                                <img src="{{ asset('java/huntkingdom/src/Uploads/' ~ post.image) }}" width="5%" height="10%" alt="{{ post.title }}">
+                            </figure>
+                            <div class="content-post">
+                                <div class="content">
+                                    <ul>
+                                        <li><i class="fas fa-user"></i><span>{{post.user.username}}</span></li>
+                                        <li><i class="fa fa-comments"></i><span>{{ post.comments | length }}</span></li>
+                                        <li><i class="fa fa-clone"></i><span>{% if post.pinned == true %} Important {% endif %}
+                                                                              {% if post.closed == true %} Closed {% endif %}
+                                                                                {% if post.solved == true %} solved {% endif %} </span></li>
+                                    </ul>
+                                    <h4> {{ post.title }}</h4>
+                                </div>
+
+                                <div class="content">
+                                    <p> {{ post.description }} </p>
+                                </div>
+                                <div class="content">
+                                    <a href="{{ path('blog_add') }}"><button type="button" class="btn btn-sm btn-outline-danger">Add a new Post</button></a>
+                                    {% if post.user.id == app.user.id or is_granted('ROLE_ADMIN') %}
+                                        <a href="{{ path('blog_update',{'id': post.id}) }}"><button type="button" class="btn btn-sm btn-outline-info">Update</button></a>
+                                        <a href="{{ path('blog_delete',{'id': post.id}) }}"><button type="button" class="btn btn-sm btn-outline-danger">Delete</button></a>
+                          {% if post.closed == false %}              <a href="{{ path('close_pub',{'id': post.id}) }}"><button type="button" class="btn btn-sm btn-outline-danger">Close</button></a>
+              {% endif %}                      {% endif %}
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="admin">
+                            <div class="dbox">
+                                <div class="floatleft">
+                                    <div class="content">
+                                        <h4>About the writer - {{ post.user.username }}</h4>
+                                        <p>Research Scientist @ TU Munich || Space Entrepreneur || Co-Founder & CEO @ MyelinS || NASA iTech Winner</p>
+                                        <a href="{{ path('more_pub',{'user': post.user.id}) }}">more of {{ post.user.username }} 's posts</a>
+                                    </div>
+                                </div>
+                                <div class="floatright">
+                                    <figure><img src="{{ asset('java/huntkingdom/src/Uploads/' ~ post.user.picture) }}" width="80%" height="80%" alt=""></figure>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="comments-area">
+                            <h3>Comments <span>{{ post.comments | length }}</span></h3>
+                            {% for comment in post.comments %}
+
+                            <div class="comment-list">
+                                <div class="dbox">
+                                    <div class="dleft">
+                                        {% if comment.checked == false %}
+                                        <img id="{{ comment.id }}" data-id="{{ comment.id }}" data-url="{{ path('check', {'id': comment.id}) }}" class="check" src="{{ asset('unchecked.png') }}" width="50%" height="50%" alt="check">
+                                        {% else %}
+                                            <img data-id="{{ comment.id }}" data-url="{{ path('check', {'id': comment.id}) }}" class="check" src="{{ asset('checked.png') }}" width="50%" height="50%" alt="check">
+{% endif %}
+                                            </div>
+                                    <div class="dright">
+                                        <h5>{{ comment.user.username }}<span>{{ comment.postedAt | date }}</span></h5>
+                                        <p> {{ comment.content }} </p>
+                                    </div>
+                                    <br>
+
+                                    <div class="content">
+                                        {% if post.user.id == app.user.id or is_granted('ROLE_ADMIN') %}
+                                            <a href="{{ path('delete_comment',{'id': comment.id }) }}"><button type="button" class="btn btn-sm btn-outline-info">delete</button></a>
+                                        {% endif %}
+                                    </div>
+                                </div>
+                            </div>
+                            {% endfor %}
+                        </div>
+                        {% if post.closed == false %}
+                        <div class="comment-box">
+                            <h3>LEave a <span>comment</span></h3>
+                            <form action="{{ path('add_comment') }}" method="post" >
+                                <fieldset class="mr-b30">
+                                    <textarea rows="3" name="comment" placeholder="Comment"></textarea>
+                                </fieldset>
+                                <button type="submit" class="btn1">send a comment</button>
+                            </form>
+                        </div>
+                        {% endif %}
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </section>
+<!--Partner area End here-->
+<!--Subscribe area start here-->
+<section class="subscribe-area">
+    <div class="container">
+        <div class="row">
+            <div class="col-md-12 col-sm-12">
+                <div class="subscribe">
+                    <span class="ico"><i class="far fa-envelope"></i></span>
+                    <div class="conts">
+                        <h2>Get Our Latest News</h2>
+                        <p>Subscribe our Newsletter Now !</p>
+                    </div>
+                    <form>
+                        <input type="email" placeholder="Email Address">
+                        <button type="submit" class="btn1">Subscribe</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+<!--Subscribe area End here-->
+<!--Footer area start here-->
+<footer class="jarallax">
+    <div class="footer-top section">
+        <div class="container">
+            <div class="row">
+                <div class="col-md-4 col-sm-6">
+                    <div class="foo-about">
+                        <figure><img src="assets/images/logo/logo.png" alt="" /></figure>
+                        <div class="contents">
+                            <p>All modern weaponts can apprecie our broad services akshay handge phatum feugiat gun. This is Photo shop's version of Lorem.</p>
+                            <a href="#" class="btn3">read more <i class="fas fa-arrow-right"></i></a>
+                        </div>
+                        <ul class="foo-social">
+                            <li><a href="#"><i class="fab fa-facebook-f"></i></a></li>
+                            <li><a href="#"><i class="fab fa-twitter"></i></a></li>
+                            <li><a href="#"><i class="fab fa-youtube"></i></a></li>
+                            <li><a href="#"><i class="fab fa-linkedin-in"></i></a></li>
+                        </ul>
+                    </div>
+                </div>
+                <div class="col-md-4 col-sm-6">
+                    <h2>latest News</h2>
+                    <div class="foo-news">
+                        <div class="newslists">
+                            <div class="dbox">
+                                <div class="dleft">
+                                    <figure><img src="assets/images/blog/sm-1.jpg" alt="" /></figure>
+                                </div>
+                                <div class="dright">
+                                    <div class="content">
+                                        <h4><a href="#">Weapons 2017</a></h4>
+                                        <p>Weaponts can apprecie
+                                            <br> our broad services.</p>
+                                        <span><i class="fas fa-calendar"></i> 12 Jan 2017</span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="newslists">
+                            <div class="dbox">
+                                <div class="dleft">
+                                    <figure><img src="assets/images/blog/sm-2.jpg" alt="" /></figure>
+                                </div>
+                                <div class="dright">
+                                    <div class="content">
+                                        <h4><a href="#">Weapons 2018</a></h4>
+                                        <p>Weaponts can apprecie
+                                            <br> our broad services.</p>
+                                        <span><i class="fas fa-calendar"></i> 12 Jan 2018</span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-4 col-sm-6">
+                    <h2>Product Shop</h2>
+                    <div class="products-foo">
+                        <ul>
+                            <li>
+                                <a href="#"><img src="assets/images/products/sm1.jpg" alt="" /></a>
+                            </li>
+                            <li>
+                                <a href="#"><img src="assets/images/products/sm2.jpg" alt="" /></a>
+                            </li>
+                            <li>
+                                <a href="#"><img src="assets/images/products/sm3.jpg" alt="" /></a>
+                            </li>
+                            <li>
+                                <a href="#"><img src="assets/images/products/sm4.jpg" alt="" /></a>
+                            </li>
+                        </ul>
+                        <p>For More Products and Gun Click Here!</p>
+                        <a href="#" class="btn1">Our Shop</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="footer-bottom">
+        <div class="container">
+            <div class="row">
+                <div class="col-md-6 col-sm-12">
+                    <div class="copyright sm-t-center">
+                        <p>Copyright © 2018 <a href="#"><span>Gun</span> </a>Shop. Design by <a href="#"><span>Webstrot</span></a></p>
+                    </div>
+                </div>
+                <div class="col-md-6 col-sm-12">
+                    <div class="foo-links sm-t-center">
+                        <ul>
+                            <li><a href="#">Privacy Policy</a></li>
+                            <li><a href="#">Terms & Conditions</a></li>
+                            <li><a href="#">Copyright Policy</a></li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</footer>
+
+    <script src="{{ asset('jquery-min.js') }}"> </script>
+
+    <script>
+        $(document).on("click", ".check", function(){
+                    var commentId = $(this).data('id');
+                    var checkUrl = $(this).data('url');
+                        $.ajax({
+                            url:checkUrl,
+                            type:"post",
+                           // data:$("form").serialize(),
+                            success:function(){
+                                $('#'+commentId).attr("src","{{ asset('checked.png') }}")
+                            }
+                        })
+                    }
+                )
+
+    </script>
+
+{% endblock %}

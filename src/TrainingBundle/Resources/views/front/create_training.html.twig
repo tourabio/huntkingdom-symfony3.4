@@ -1,0 +1,290 @@
+{% extends 'front/layout.html.twig' %}
+
+{% block content %}
+
+    <section class="breadcumb-area jarallax bg-img af">
+        <div class="breadcumb">
+            <div class="container">
+                <div class="row">
+                    <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                        <div class="content">
+                            <h2>Your Plan</h2>
+
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+    <section class="price-area section bg-img jarallax">
+        <div class="container">
+            <div class="row">
+                <div class="col-md-12 col-sm-12">
+                    <div class="section-heading">
+                        <h2>Trainning </h2>
+                        <p>All modern weaponts can appreciate our broad services akshay handge pharetra, eratd fermentum feugiat, gun are best velit mauris aks egestasut aliquam.</p>
+                        <h3>if you have not found your training then it is canceled by the trainer</h3>
+                    </div>
+                </div>
+            </div>
+            {% for entrainements in entrainementsAffichage %}
+                {% if entrainements.accepter=="oui" %}
+            <div class="row">
+                <div class="col-md-12 col-sm-12">
+
+                        <div class="price-lists">
+                            <div class="phead">
+
+                                <h3>Train for {{ entrainements.categorie }}</h3>
+                                <div class="prices">
+                                    <strong>Accepted</strong>
+                                    <span></span>
+                                </div>
+                            </div>
+                            <div class="pbody">
+                                <ul>
+                                    <li><span>Hours number:  {{ entrainements.nbHeures }}</span></li>
+                                    <li><span>Price:  {{ entrainements.prix }}</span></li>
+                                    <li><span>Training date:  {{ entrainements.dateEnt|date('Y-m-d') }}</span></li>
+                                    <li><span>Training place:  {{ entrainements.lieu }}</span></li>
+                                    <li><a href="{{ path('delete_entrainement',{'id':entrainements.id})}}" class="btn1" style="background: #a42a3e">Delete</a></li>
+                                </ul>
+
+                            </div>
+                        </div>
+
+
+                </div>
+            </div>
+
+                {% elseif entrainements.accepter=="encours" %}
+                    <div class="row">
+                        <div class="col-md-12 col-sm-12">
+
+                            <div class="price-lists">
+                                <div class="phead">
+
+                                    <h3>Train for {{ entrainements.categorie }}</h3>
+                                    <div class="prices">
+                                        <strong>In progress</strong>
+                                        <span></span>
+                                    </div>
+                                </div>
+                                <div class="pbody">
+                                    <ul>
+                                        <li><span>Hours number:  {{ entrainements.nbHeures }}</span></li>
+                                        <li><span>Price:  {{ entrainements.prix }}</span></li>
+                                        <li><span>Training date:  {{ entrainements.dateEnt|date('Y-m-d') }}</span></li>
+                                        <li><span>Training place:  {{ entrainements.lieu }}</span></li>
+                                        <li><a href="{{ path('delete_entrainement',{'id':entrainements.id})}}" class="btn1" style="background: #a42a3e">Delete</a></li>
+                                    </ul>
+
+                                </div>
+                            </div>
+
+
+                        </div>
+                    </div>
+                    {% elseif entrainements.accepter=="non"  %}
+                        <div class="row">
+                            <div class="col-md-12 col-sm-12">
+
+                                <div class="price-lists">
+                                    <div class="phead">
+
+                                        <h3>Train for {{ entrainements.categorie }}</h3>
+                                        <div class="prices">
+                                            <strong>Not Accepted</strong>
+                                            <span></span>
+                                        </div>
+                                    </div>
+                                    <div class="pbody">
+                                        <ul>
+                                            <li><span>Hours number:  {{ entrainements.nbHeures }}</span></li>
+                                            <li><span>Price:  {{ entrainements.prix }}</span></li>
+                                            <li><span>Training date:  {{ entrainements.dateEnt|date('Y-m-d') }}</span></li>
+                                            <li><span>Training place:  {{ entrainements.lieu }}</span></li>
+                                            <li><a href="{{ path('delete_entrainement',{'id':entrainements.id})}}" class="btn1" style="background: #a42a3e">Delete</a></li>
+
+                                            <li> <a href=""></a><i class="fas fa-smile">smiel</i></li>
+                                        </ul>
+
+                                    </div>
+                                </div>
+
+
+                            </div>
+                        </div>
+
+                {% endif %}
+            {% endfor %}
+        </div>
+
+    </section>
+    <div class="twitter-posts section">
+        <div class="container">
+            <div class="row">
+                <div class="col-md-12 col-sm-12 pd-0">
+                    <div class="twitt-sliders">
+                        {% for actuelmonth in animalsMonth %}
+
+                        <div class="col-sm-12">
+                            <div class="contents">
+
+                                <h1>Animal Of This Month</h1>
+
+                                <p><img src="{{ asset('uploads/photos/'~actuelmonth.getImageAnimal()) }} "style="width: 200px;height: 200px;">
+                                    {{ actuelmonth.nom }}
+                                   </p>
+
+                            </div>
+                        </div>
+                        {% endfor %}
+
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <section class="training-area section bg-img jarallax af">
+        <div class="container">
+            <div class="row">
+                <div class="col-md-6 col-sm-12">
+                    <div class="training-forms">
+                        <div method="get" >
+                            {{ form_start(form,{'attr': {'novalidate': 'novalidate','id':'formtraining'} }) }}
+
+                            Select Categorie
+                            <fieldset>
+                            <select name="categorie">
+                                <option value="hunting">Hunting</option>
+                                <option value="fishing">Fishing</option>
+                            </select>
+                            </fieldset>
+                            <fieldset>
+                            {{ form_row(form.nbHeures,{'id':'nbheures'}) }}
+
+                            </fieldset>
+                            <div class="alert alert-danger" id="errorH" hidden>
+                                Choose Hours
+                            </div>
+
+
+                            {{ form_row(form.dateEnt,{'id':'dateEnt'}) }}
+                            <div class="alert alert-danger" id="errorDateEnt" hidden>
+                                Choose Date
+                            </div>
+                            <fieldset>
+
+                            {{ form_row(form.lieu,{'id':'lieu'}) }}
+
+                            </fieldset>
+                            <div class="alert alert-danger" id="errorLieu" hidden>
+                                Choose Place
+                            </div>
+                            Select Animal
+                            <fieldset>
+                            <select name="animaux">
+                                {% for animal in animals %}
+                                <option value="{{ animal.nom }}">{{ animal.nom }}</option>
+                                {% endfor %}
+                            </select>
+                            </fieldset>
+<br>
+                            Select Product
+                            <fieldset>
+                            <select name="products">
+                                {% for product in products %}
+                                    <option value="{{ product.libProd }}">{{ product.libProd }}</option>
+                                {% endfor %}
+                            </select>
+                            </fieldset>
+                            <br>
+                            {{ form_widget(form.Send, {'attr': {'class': 'btn1'}})}}
+
+                            {{ form_end(form) }}
+                        </div>
+                    </div>
+
+                </div>
+
+                <div class="col-md-6 col-sm-12">
+                    <div class="training-con pd-t60">
+                        <h2>Weapon Trainings</h2>
+                        <p>With state-of-the-art indoor training facilities and full service custom shop on lion, we can accommodate most requests.</p>
+                        <h1>P. +880 451 455</h1>
+                        <p>Proin gravida nibh vel velit auctor aliquet. Aenean sollicitudin, lorem is bibendum auctor, nisi elit consequat ipsum, nec sagittis sem nibh idlit. Duis sed odio sit amet nibh vulputate cursus a sit amet mauris. Morbi accumsan ipsum velit. Nam nec tellus a odio tincidunt.</p>
+                        <ul>
+                            <li><i class="fas fa-long-arrow-alt-right"></i>Trainning x2 Hand Gun Full Pack</li>
+                            <li><i class="fas fa-long-arrow-alt-right"></i>Machine Gun CS5 4141 Full Pack </li>
+                            <li><i class="fas fa-long-arrow-alt-right"></i>Custom Shooting Range For Trainning</li>
+                            <li><i class="fas fa-long-arrow-alt-right"></i>Outfitters hunting and tactical shooting</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+{% endblock content %}
+{% block js %}
+    <script type="text/javascript">
+        $("#formtraining").submit(function(e){
+
+            /****  nombre d'heures *****/
+            if ( $("#nbheures").val()==""){
+                $("#errorH").show();
+                e.preventDefault();
+
+            }
+            else if (!$("#nbheures").val().match(/^[0-9]+$/i))
+            {
+                $("#errorH").show();
+                e.preventDefault();
+            }
+            else
+            {
+                $("#errorH").hide();
+            }
+
+
+            /****  Lieu *****/
+
+            if ( $("#lieu").val()==""){
+                $("#errorLieu").show().text("Choose Place");
+                e.preventDefault();
+
+            }
+            else if (!$("#lieu").val().match(/^[0-9]|[a-z]+$/i))
+            {
+                $("#errorLieu").show().text("field does not contain symbols");
+                e.preventDefault();
+            }
+            else
+            {
+                $("#errorLieu").hide();
+            }
+            /****  Training Date *****/
+            //var fullDate = new Date()
+
+
+
+            //var currentDate =  fullDate.getFullYear()+ "/"+fullDate.getMonth()+"/" +fullDate.getDate() ;
+            //var currentDate =  fullDate.getMonth()+ "/" + fullDate.getDate() + "/" +fullDate.getFullYear() ;
+
+         /*if ($("#dateEnt").val() < currentDate)
+            {
+                $("#errorDateEnt").show().text("invalid Date");
+                e.preventDefault();
+            }
+            else
+            {
+                $("#errorDateEnt").hide();
+            }*/
+
+        });
+
+
+    </script>
+{% endblock %}
